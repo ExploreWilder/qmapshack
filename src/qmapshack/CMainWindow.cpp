@@ -302,6 +302,7 @@ CMainWindow::CMainWindow()
 
 
     docks << dockMaps
+          << dock3DMaps
           << dockDem
           << dockWorkspace
           << dockDatabase
@@ -337,6 +338,11 @@ CMainWindow::CMainWindow()
     actionToggleMaps->setObjectName("actionToggleMaps");
     actionToggleMaps->setIcon(QIcon(":/icons/32x32/ToggleMaps.png"));
     menuWindow->insertAction(actionSetupToolbar, actionToggleMaps);
+
+    QAction * actionToggle3DMaps = dock3DMaps->toggleViewAction();
+    actionToggle3DMaps->setObjectName("actionToggle3DMaps");
+    actionToggle3DMaps->setIcon(QIcon(":/icons/32x32/Toggle3DMaps.png"));
+    menuWindow->insertAction(actionSetupToolbar, actionToggle3DMaps);
 
     QAction * actionToggleDem = dockDem->toggleViewAction();
     actionToggleDem->setObjectName("actionToggleDem");
@@ -431,6 +437,7 @@ CMainWindow::CMainWindow()
                      << actionQuickstart
                      << actionSetupToolbar
                      << actionToggleMaps
+                     << actionToggle3DMaps
                      << actionToggleDem
                      << actionToggleWorkspace
                      << actionToggleRealtime
@@ -461,6 +468,7 @@ CMainWindow::CMainWindow()
                    << separator1
                    << actionSetupToolbar
                    << actionToggleMaps
+                   << actionToggle3DMaps
                    << actionToggleDem
                    << actionToggleWorkspace
                    << actionToggleRealtime
@@ -496,6 +504,7 @@ void CMainWindow::prepareMenuForMac()
 {
     toolBar->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockMaps->toggleViewAction()->setMenuRole(QAction::NoRole);
+    dock3DMaps->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockDem->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockWorkspace->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockRealtime->toggleViewAction()->setMenuRole(QAction::NoRole);
