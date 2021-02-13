@@ -21,7 +21,7 @@ endif()
 # Do distribution dependent stuff
 ###############################################################################################
 string(TIMESTAMP YEAR "%Y")
-set(EXPIRE_YEAR "2021")
+set(EXPIRE_YEAR "2022")
 set(DEBIAN_RELEASE_INFO "/etc/debian_version")
 
 if(((EXISTS ${DEBIAN_RELEASE_INFO}) AND (${YEAR} LESS ${EXPIRE_YEAR})) OR APPLE)
@@ -78,7 +78,7 @@ option(KEEP_OLD_TRANSLATIONS "Keep obsolete translations"                       
 
 # Feature related
 option(BUILD_QMAPSHACK      "Build QMapShack Binary"                                ON)
-option(BUILD_QMAPTOOL       "Build QMapTool Binary including command line tools"    ON)
+option(BUILD_QMAPTOOL       "Build QMapTool Binary including command line tools"    OFF)
 
 if(WIN32)
 option(USE_QT5DBus          "Enable device detection via DBus"                      OFF)

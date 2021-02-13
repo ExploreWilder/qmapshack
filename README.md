@@ -1,4 +1,11 @@
-Next to all dependencies you need a working GIT, g++ and cmake installation to compile QMapShack on your computer. Clone and compile the code base by:
+Next to all dependencies you need a working GIT, g++ and cmake installation to compile QMapShack on your computer. For Debian-based OS:
+
+
+	sudo snap install cmake
+	sudo apt install qttools5-dev qtwebengine5-dev libgdal-dev libroutino-dev libquazip5-dev libalglib-dev doxygen
+
+
+Clone and compile the code base by:
 
         git clone https://github.com/Maproom/qmapshack.git QMapShack
         cd QMapShack
@@ -7,7 +14,7 @@ Next to all dependencies you need a working GIT, g++ and cmake installation to c
         mkdir build_QMapShack
         cd build_QMapShack
         ccmake ../QMapShack
-        make
+        make --jobs=`nproc`
 
 To update the code to the cutting edge do in QMapShack:
 
