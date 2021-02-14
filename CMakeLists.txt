@@ -1,7 +1,7 @@
 ###############################################################################################
 # CMake compatibility requirements
 ###############################################################################################
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # Needed to properly handle extract translations strings when using the Ninja
 # generator.
@@ -43,8 +43,8 @@ endif(((EXISTS ${DEBIAN_RELEASE_INFO}) AND (${YEAR} LESS ${EXPIRE_YEAR})) OR APP
 project(QMapShack VERSION 1.15.2)
 
 # FOR A RELEASE:
-# remove "development" for a release
 set(DEVELOPMENT_VERSION OFF)
+set(CMAKE_BUILD_TYPE RELEASE)
 
 
 ###############################################################################################
@@ -149,7 +149,6 @@ if(BUILD_FOR_LOCAL_SYSTEM)
 endif(BUILD_FOR_LOCAL_SYSTEM)
 
 # try to figure out which compiler flags are supported (and add them)
-cxx_add_flag_if_supported(-Wsuggest-override)
 cxx_add_flag_if_supported(-Woverloaded-virtual)
 
 ###############################################################################################
@@ -172,6 +171,9 @@ find_package(JPEG                   REQUIRED)
 find_package(ROUTINO                REQUIRED)
 find_package(QuaZip5                REQUIRED)
 find_package(ALGLIB                         ) # optional as we can use our local version
+find_package(Boost 1.46 REQUIRED
+    COMPONENTS thread program_options filesystem system
+    date_time serialization regex chrono iostreams)
 
 
 if(${Qt5Widgets_VERSION} VERSION_LESS 5.8.0)
@@ -205,6 +207,7 @@ endif(NOT ALGLIB_FOUND AND BUILD_QMAPSHACK)
 
 add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H -DHELPPATH=${HTML_INSTALL_DIR})
 
+
 ###############################################################################################
 # Create global config.h
 ###############################################################################################
@@ -222,6 +225,9 @@ configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 # Now we are ready to compile all sub-projects
 ###############################################################################################
 if(BUILD_QMAPSHACK)
+add_subdirectory(3rdparty/vts-browser-light/browser)
+include_directories(3rdparty/vts-browser-light/browser/src/vts-libbrowser/include)
+include_directories(3rdparty/vts-browser-light/browser/src/vts-librenderer/include)
 add_subdirectory(src/qmapshack)
 endif(BUILD_QMAPSHACK)
 

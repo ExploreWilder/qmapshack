@@ -22,7 +22,8 @@ add_definitions(-DROUTINO_XML_PATH=${ROUTINO_XML_PATH})
 # All source files needed to compile
 ###############################################################################################
 
-set( SRCS    
+set( SRCS  
+    3d/C3DMap.cpp  
     CAbout.cpp    
     CMainWindow.cpp
     CSingleInstanceProxy.cpp
@@ -371,6 +372,7 @@ endif(WIN32)
 
 
 set( HDRS
+    3d/C3DMap.h
     CAbout.h
     CMainWindow.h
     CSingleInstanceProxy.h
@@ -946,6 +948,8 @@ target_link_libraries(${APPLICATION_NAME}
     ${ROUTINO_LIBRARIES}
     ${ALGLIB_LIBRARIES}
     ${QUAZIP_LIBRARIES}
+    vts-browser
+    vts-renderer
 )
 
 if(APPLE)

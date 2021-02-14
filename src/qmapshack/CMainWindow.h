@@ -20,11 +20,13 @@
 #ifndef CMAINWINDOW_H
 #define CMAINWINDOW_H
 
+#include "3d/C3DMap.h"
 #include "ui_IMainWindow.h"
 #include <QDir>
 #include <QMainWindow>
 #include <QPointer>
 
+class C3DMap;
 class CMapList;
 class CDemList;
 class QLabel;
@@ -238,6 +240,8 @@ private:
     CGisWorkspace * widgetGisWorkspace;
     CGisDatabase * widgetGisDatabase;
     CRtWorkspace * widgetRtWorkspace;
+    C3DMap * window3DMap;
+    QWidget * widget3DMap;
 
     CToolBarConfig * toolBarConfig;
     CGeoSearchConfig * geoSearchConfig;

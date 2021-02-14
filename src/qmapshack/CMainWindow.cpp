@@ -17,6 +17,7 @@
 
 **********************************************************************************************/
 
+#include "3d/C3DMap.h"
 #include "canvas/CCanvas.h"
 #include "config.h"
 #include "CAbout.h"
@@ -138,6 +139,10 @@ CMainWindow::CMainWindow()
 
     widgetRtWorkspace = new CRtWorkspace(this);
     dockRealtime->setWidget(widgetRtWorkspace);
+
+    window3DMap = new C3DMap();
+    widget3DMap = QWidget::createWindowContainer(window3DMap);
+    dock3DMaps->setWidget(QWidget::createWindowContainer(window3DMap));
 
     geoSearchWeb = new CGeoSearchWeb(this);
 
@@ -624,6 +629,8 @@ CMainWindow::~CMainWindow()
     // database widget.
     delete widgetGisWorkspace;
     delete widgetGisDatabase;
+
+    delete window3DMap;
 }
 
 void CMainWindow::setupHomePath()

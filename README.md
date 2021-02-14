@@ -1,37 +1,63 @@
-Next to all dependencies you need a working GIT, g++ and cmake installation to compile QMapShack on your computer. For Debian-based OS:
+# About
 
+**Why?** As a hiker, I want to plan, edit, and share tracks on interactive and immersive maps.
 
-	sudo snap install cmake
-	sudo apt install qttools5-dev qtwebengine5-dev libgdal-dev libroutino-dev libquazip5-dev libalglib-dev doxygen
+**What?** A desktop application with a 2D map for topographic analysis and a 3D map for terrain analysis.
 
+**How?** The idea is to combine a powerful route planning software (QMapShack), a 3D map browser (VTS), and a tile server (ExploreWilder).
 
-Clone and compile the code base by:
+# Work in Progress
 
-        git clone https://github.com/Maproom/qmapshack.git QMapShack
-        cd QMapShack
-        git checkout dev
-        cd ..
-        mkdir build_QMapShack
-        cd build_QMapShack
-        ccmake ../QMapShack
-        make --jobs=`nproc`
+This project is experimental.
 
-To update the code to the cutting edge do in QMapShack:
+# Build for GNU/Linux Desktop
 
-        git pull
+Install packages that are required to build the application.
 
-And change back to build_QMapShack:
+```bash
+sudo apt update
+sudo apt install \
+    git \
+    g++ \
+    cmake-curses-gui \
+    nasm \
+    libssl-dev \
+    libboost-all-dev \
+    libeigen3-dev \
+    libproj-dev \
+    libgeographic-dev \
+    libjsoncpp-dev \
+    libsdl2-dev \
+    libfreetype6-dev \
+    libharfbuzz-dev \
+    libcurl4-openssl-dev \
+    libjpeg-dev \
+    libglfw3-dev \
+    xorg-dev \
+    qt5-default \
+    qttools5-dev \
+    qtwebengine5-dev \
+    libgdal-dev \
+    libroutino-dev \
+    libquazip5-dev \
+    libalglib-dev \
+    doxygen
+```
 
-        make
+Clone the Git repository with all submodules and compile.
 
-Dependencies
+```bash
+git clone -b 3D --recursive https://github.com/ExloreWilder/qmapshack
+mkdir build_QMapShack
+cd build_QMapShack
+ccmake ../qmapshack
+export CPLUS_INCLUDE_PATH=/usr/include/gdal
+export C_INCLUDE_PATH=/usr/include/gdal
+make --jobs=`nproc`
+```
 
-* [Qt5](https://www.qt.io/) (at least 5.8)
-* [GDAL](http://www.gdal.org/) (at least GDAL 2.3)
-* [Proj4](https://github.com/OSGeo/proj.4/wiki) (at least 5.0.0)
-* [Routino](http://www.routino.org/) (at least 3.1)
-* [QuaZip](http://quazip.sourceforge.net/index.html) (Qt5 version)
-* CMake/Make
-* a C++ compiler (supporting C++11)
+And run the application.
 
-
+```bash
+./bin/qmapshack
+```

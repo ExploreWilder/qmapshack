@@ -28,6 +28,9 @@
 
 int main(int argc, char ** argv)
 {
+    // force Qt to use actual OpenGL, no ANGLE nor software simulation
+    QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+
     QApplication app(argc, argv);
 
     QCoreApplication::setApplicationName("QMapShack");

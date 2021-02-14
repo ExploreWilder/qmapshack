@@ -1,0 +1,4 @@
+[submodule "3rdparty/vts-browser-light"]
+	path = 3rdparty/vts-browser-light
+	url = https://github.com/ExploreWilder/vts-browser-cpp
+	branch = light
