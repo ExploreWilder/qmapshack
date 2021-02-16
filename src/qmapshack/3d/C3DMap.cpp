@@ -25,6 +25,8 @@
 #include <vts-browser/mapOptions.hpp>
 #include <vts-browser/camera.hpp>
 #include <vts-browser/navigation.hpp>
+#include <vts-browser/navigationOptions.hpp>
+#include <vts-browser/position.hpp>
 #include <vts-renderer/renderer.hpp>
 #include <stdexcept>
 #include <iostream>
@@ -99,6 +101,7 @@ C3DMap::C3DMap()
             "");
     camera = map->createCamera();
     navigation = camera->createNavigation();
+    navigation->options().inertiaPan = 0; // same as the 2D canvas
 
     context = std::make_shared<vts::renderer::RenderContext>();
     context->bindLoadFunctions(map.get());
@@ -129,10 +132,16 @@ void C3DMap::mouseMove(QMouseEvent *event)
     double n[3] = { (double)diff.x(), (double)diff.y(), 0 };
 
     if (event->buttons() & Qt::LeftButton)
+    {
         navigation->pan(n);
+        vts::Position currentPosition(navigation->getPosition());
+        emit sigMoveMap(QPointF{currentPosition.point[0], currentPosition.point[1]});
+    }
     if ((event->buttons() & Qt::RightButton)
         || (event->buttons() & Qt::MiddleButton))
+    {
         navigation->rotate(n);
+    }
 }
 
 void C3DMap::mousePress(QMouseEvent *)
@@ -143,6 +152,9 @@ void C3DMap::mouseRelease(QMouseEvent *)
 
 void C3DMap::mouseWheel(QWheelEvent *event)
 {
+    // angleDelta() returns the eighths of a degree
+    // of the mousewheel
+    // -> zoom in/out every 15 degrees = every 120 eights
     navigation->zoom(event->angleDelta().y() / 120.0);
 }
 
@@ -215,4 +227,11 @@ void C3DMap::tick()
     gl->swapBuffers(this);
 }
 
+void C3DMap::slotMoveMap(const QPointF& pos)
+{
+    vts::Position currentPosition(navigation->getPosition());
+    currentPosition.point[0] = pos.x();
+    currentPosition.point[1] = pos.y();
+    navigation->setPosition(currentPosition);
+}
 

@@ -95,6 +95,7 @@ public:
     qreal getSlopeAt(const QPointF &pos) const;
     void getSlopeAt(const QPolygonF& pos, QPolygonF& slope) const;
 
+    void moveMapAbsDeg(const QPointF& newPosFocus);
     void moveMap(const QPointF &delta);
     void zoomTo(const QRectF& rect);
     void displayInfo(const QPoint& px);
@@ -188,6 +189,7 @@ signals:
     void sigMousePosition(const QPointF& pos, qreal ele, qreal slope);
     void sigZoom();
     void sigMove();
+    void sigMoveMap(const QPointF& pos);
     void sigResize(const QSize& size);
 
 public slots:

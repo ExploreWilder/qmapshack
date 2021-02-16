@@ -4,7 +4,11 @@
 
 **What?** A desktop application with a 2D map for topographic analysis and a 3D map for terrain analysis.
 
-**How?** The idea is to combine a powerful route planning software (QMapShack), a 3D map browser (VTS), and a tile server (ExploreWilder).
+**How?** The idea is to make a complete solution based on:
+
+* The powerful route planning software: [QMapShack](https://github.com/Maproom/qmapshack/wiki),
+* The immersive 3D map browser: [VTS frontend](https://github.com/melowntech/vts-browser-cpp),
+* The best maps with global coverage through the [Melown](https://www.melowntech.com/) and [ExploreWilder](https://explorewilder.com/) proxies.
 
 # Work in Progress
 
@@ -14,7 +18,7 @@ This project is experimental.
 
 Install packages that are required to build the application.
 
-```bash
+```
 sudo apt update
 sudo apt install \
     git \
@@ -46,7 +50,7 @@ sudo apt install \
 
 Clone the Git repository with all submodules and compile.
 
-```bash
+```
 git clone -b 3D --recursive https://github.com/ExloreWilder/qmapshack
 mkdir build_QMapShack
 cd build_QMapShack
@@ -58,6 +62,6 @@ make --jobs=`nproc`
 
 And run the application.
 
-```bash
+```
 ./bin/qmapshack
 ```

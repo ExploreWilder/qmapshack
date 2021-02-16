@@ -238,6 +238,7 @@ CMainWindow::CMainWindow()
     connect(tabWidget,                   &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabCanvas);
     connect(tabMaps,                     &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabMaps);
     connect(tabDem,                      &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabDem);
+    connect(window3DMap,                 &C3DMap::sigMoveMap,            this,      &CMainWindow::slotMoveCurrentMap);
 
     if(IAppSetup::getPlatformInstance()->findExecutable("qmaptool").isEmpty())
     {
@@ -667,6 +668,7 @@ CCanvas *CMainWindow::addView(const QString& name)
     CCanvas * view = new CCanvas(tabWidget, name);
     tabWidget->addTab(view, view->objectName());
     connect(view, &CCanvas::sigMousePosition, this, &CMainWindow::slotMousePosition);
+    connect(view, &CCanvas::sigMoveMap, window3DMap, &C3DMap::slotMoveMap);
     connect(actionShowTrackHighlight, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowMinMaxSummary, &QAction::changed,     view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowTrackInfoTable, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
@@ -1224,6 +1226,16 @@ void CMainWindow::slotMousePosition(const QPointF& pos, qreal ele, qreal slope)
     else
     {
         lblPosGrid->hide();
+    }
+}
+
+void CMainWindow::slotMoveCurrentMap(const QPointF& pos)
+{
+    CCanvas * canvas = getVisibleCanvas();
+    if(canvas)
+    {
+        std::cout << "move canvas to: " << pos.x() << ", " << pos.y() << "\n";
+        canvas->moveMapAbsDeg(pos);
     }
 }
 

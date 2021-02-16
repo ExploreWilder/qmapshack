@@ -63,6 +63,7 @@ public:
 
 class C3DMap : public QWindow
 {
+    Q_OBJECT
 public:
     C3DMap();
     ~C3DMap();
@@ -86,6 +87,12 @@ public:
     std::chrono::high_resolution_clock::time_point lastTime;
 
     DataThread dataThread;
+
+signals:
+    void sigMoveMap(const QPointF& pos);
+
+public slots:
+    void slotMoveMap(const QPointF& pos);
 };
 
 #endif //C3DMAP_H

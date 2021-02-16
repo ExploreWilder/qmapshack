@@ -1029,6 +1029,13 @@ void CCanvas::slotUpdateTrackInfo(bool updateVisuals)
     update();
 }
 
+void CCanvas::moveMapAbsDeg(const QPointF& newPosFocus)
+{
+    posFocus = newPosFocus * DEG_TO_RAD;
+    emit sigMove();
+    slotTriggerCompleteUpdate(eRedrawAll);
+}
+
 void CCanvas::moveMap(const QPointF& delta)
 {
     map->convertRad2Px(posFocus);
@@ -1036,6 +1043,11 @@ void CCanvas::moveMap(const QPointF& delta)
     map->convertPx2Rad(posFocus);
 
     emit sigMove();
+
+    if(labelHelp != nullptr && !labelHelp->isVisible())
+    {
+        emit sigMoveMap(posFocus * RAD_TO_DEG);
+    }
 
     slotTriggerCompleteUpdate(eRedrawAll);
 }
