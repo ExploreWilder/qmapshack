@@ -470,6 +470,16 @@ void IDrawContext::draw(QPainter& p, CCanvas::redraw_e needsRedraw, const QPoint
     }
 }
 
+qreal IDrawContext::getHeight() const
+{
+    QPointF top(0., 0.), bottom(0., viewHeight);
+    convertPx2Rad(top);
+    convertPx2Rad(bottom);
+
+    // Earth radius multiplied by the latitude angle (rad)
+    return 6371010. * (top.y() - bottom.y());
+}
+
 void IDrawContext::run()
 {
     mutex.lock();

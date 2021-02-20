@@ -98,6 +98,10 @@ public:
     void moveMapAbsDeg(const QPointF& newPosFocus);
     void moveMap(const QPointF &delta);
     void zoomTo(const QRectF& rect);
+
+    /// Wrapper for sigZoomMap() with the latest update.
+    void emitSigZoomMap();
+
     void displayInfo(const QPoint& px);
     poi_t findPOICloseBy(const QPoint& px) const;
 
@@ -188,6 +192,15 @@ public:
 signals:
     void sigMousePosition(const QPointF& pos, qreal ele, qreal slope);
     void sigZoom();
+
+    /**
+       @brief Sent a signal to the 3D map.
+
+       @param pos The position of focus (unit: rad)
+       @param h The map height (unit: rad)
+     */
+    void sigZoomMap(const QPointF& pos, qreal h);
+
     void sigMove();
     void sigMoveMap(const QPointF& pos);
     void sigResize(const QSize& size);
@@ -196,6 +209,10 @@ public slots:
     void slotTriggerCompleteUpdate(CCanvas::redraw_e flags);
     void slotUpdateTrackInfo(bool updateVisuals);
     void slotCheckTrackOnFocus();
+
+public:
+    /// Handle the wheel event. It is public so that the 3D map can forward the event.
+    void wheelEvent(QWheelEvent  *e) override;
 
 protected:
     bool event(QEvent *) override;
@@ -206,7 +223,6 @@ protected:
     void mouseMoveEvent(QMouseEvent  *e) override;
     void mouseReleaseEvent(QMouseEvent  *e) override;
     void mouseDoubleClickEvent(QMouseEvent  *e) override;
-    void wheelEvent(QWheelEvent  *e) override;
     void enterEvent(QEvent       *e) override;
     void leaveEvent(QEvent       *e) override;
     void keyPressEvent(QKeyEvent    *e) override;

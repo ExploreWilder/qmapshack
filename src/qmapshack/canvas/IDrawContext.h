@@ -77,6 +77,13 @@ public:
     }
 
     /**
+       @brief Convert the viewport height in pixel into rad.
+       @note Assuming a WGS84 projection.
+       @return Return the viewport height in rad.
+     */
+    qreal getHeight() const;
+
+    /**
        @brief Convert a geo coordinate of format lon/lat WGS84 into the currently used coordinate/projection/datum system.
        @note  The unit is dependent on the currently used projection and must not necessarily be meter
        @param p             the point to convert

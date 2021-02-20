@@ -101,7 +101,10 @@ C3DMap::C3DMap()
             "");
     camera = map->createCamera();
     navigation = camera->createNavigation();
-    navigation->options().inertiaPan = 0; // same as the 2D canvas
+
+    // same config as the 2D canvas:
+    navigation->options().inertiaPan = 0;
+    navigation->options().inertiaZoom = 0;
 
     context = std::make_shared<vts::renderer::RenderContext>();
     context->bindLoadFunctions(map.get());
@@ -156,6 +159,8 @@ void C3DMap::mouseWheel(QWheelEvent *event)
     // of the mousewheel
     // -> zoom in/out every 15 degrees = every 120 eights
     navigation->zoom(event->angleDelta().y() / 120.0);
+
+    emit sigZoomMap(event);
 }
 
 bool C3DMap::event(QEvent *event)
@@ -233,5 +238,11 @@ void C3DMap::slotMoveMap(const QPointF& pos)
     currentPosition.point[0] = pos.x();
     currentPosition.point[1] = pos.y();
     navigation->setPosition(currentPosition);
+}
+
+void C3DMap::slotZoomMap(const QPointF& pos, qreal h)
+{
+    slotMoveMap(pos);
+    navigation->setViewExtent(h);
 }
 

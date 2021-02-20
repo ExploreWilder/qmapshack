@@ -239,6 +239,7 @@ CMainWindow::CMainWindow()
     connect(tabMaps,                     &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabMaps);
     connect(tabDem,                      &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabDem);
     connect(window3DMap,                 &C3DMap::sigMoveMap,            this,      &CMainWindow::slotMoveCurrentMap);
+    connect(window3DMap,                 &C3DMap::sigZoomMap,            this,      &CMainWindow::slotZoomCurrentMap);
 
     if(IAppSetup::getPlatformInstance()->findExecutable("qmaptool").isEmpty())
     {
@@ -669,6 +670,7 @@ CCanvas *CMainWindow::addView(const QString& name)
     tabWidget->addTab(view, view->objectName());
     connect(view, &CCanvas::sigMousePosition, this, &CMainWindow::slotMousePosition);
     connect(view, &CCanvas::sigMoveMap, window3DMap, &C3DMap::slotMoveMap);
+    connect(view, &CCanvas::sigZoomMap, window3DMap, &C3DMap::slotZoomMap);
     connect(actionShowTrackHighlight, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowMinMaxSummary, &QAction::changed,     view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowTrackInfoTable, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
@@ -1234,8 +1236,17 @@ void CMainWindow::slotMoveCurrentMap(const QPointF& pos)
     CCanvas * canvas = getVisibleCanvas();
     if(canvas)
     {
-        std::cout << "move canvas to: " << pos.x() << ", " << pos.y() << "\n";
         canvas->moveMapAbsDeg(pos);
+    }
+}
+
+void CMainWindow::slotZoomCurrentMap(QWheelEvent *event)
+{
+    CCanvas * canvas = getVisibleCanvas();
+    if(canvas)
+    {
+        // forward the event from the 3D map window to the 2D canvas
+        canvas->wheelEvent(event);
     }
 }
 

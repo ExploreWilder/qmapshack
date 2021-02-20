@@ -90,9 +90,21 @@ public:
 
 signals:
     void sigMoveMap(const QPointF& pos);
+    void sigZoomMap(QWheelEvent *event);
 
 public slots:
+    /**
+       @brief Move the map to a specified position.
+       @param pos The position of focus (center) in degree.
+     */
     void slotMoveMap(const QPointF& pos);
+
+    /**
+       @brief Move and zoom in/out the map to a specified position and view extent.
+       @param pos The position of focus (center) in degree.
+       @param h The view extent in meters.
+     */
+    void slotZoomMap(const QPointF& pos, qreal h);
 };
 
 #endif //C3DMAP_H
