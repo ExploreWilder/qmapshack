@@ -113,7 +113,7 @@ void CSetupDatabase::slotNewDB()
     SETTINGS;
     QString path = cfg.value("Database/lastDatabasePath", QDir::homePath()).toString();
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("New database..."), path, "QMapShack Database (*.db)");
+    QString filename = QFileDialog::getSaveFileName(this, tr("New database..."), path, "QMapShack Database (*.db)", nullptr, QFileDialog::DontUseNativeDialog);
     if(filename.isEmpty())
     {
         return;
@@ -138,7 +138,7 @@ void CSetupDatabase::slotOpenDB()
     SETTINGS;
     QString path = cfg.value("Database/lastDatabasePath", QDir::homePath()).toString();
 
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open database..."), path, "QMapShack Database (*.db)");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open database..."), path, "QMapShack Database (*.db)", nullptr, QFileDialog::DontUseNativeDialog);
     if(filename.isEmpty())
     {
         return;

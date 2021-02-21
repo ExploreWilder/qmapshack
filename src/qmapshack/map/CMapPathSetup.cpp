@@ -59,7 +59,7 @@ void CMapPathSetup::slotItemSelectionChanged()
 
 void CMapPathSetup::slotAddPath()
 {
-    QString path = QFileDialog::getExistingDirectory(this, tr("Select map path..."), QDir::homePath(), 0);
+    QString path = QFileDialog::getExistingDirectory(this, tr("Select map path..."), QDir::homePath(), QFileDialog::DontUseNativeDialog);
     if(!path.isEmpty())
     {
         if(!paths.contains(path))
@@ -78,7 +78,7 @@ void CMapPathSetup::slotDelPath()
 
 void CMapPathSetup::slotChangeCachePath()
 {
-    QString path = QFileDialog::getExistingDirectory(this, tr("Select root path..."), labelCacheRoot->text());
+    QString path = QFileDialog::getExistingDirectory(this, tr("Select root path..."), labelCacheRoot->text(), QFileDialog::DontUseNativeDialog);
     if(path.isEmpty())
     {
         return;

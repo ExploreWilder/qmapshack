@@ -638,7 +638,7 @@ void CMainWindow::setupHomePath()
 {
     SETTINGS;
     homeDir = cfg.value("Paths/homePath", QDir::homePath()).toString();
-    const QString& homePath = QFileDialog::getExistingDirectory(this, tr("Select folder..."), homeDir.absolutePath());
+    const QString& homePath = QFileDialog::getExistingDirectory(this, tr("Select folder..."), homeDir.absolutePath(), QFileDialog::DontUseNativeDialog);
     if(homePath.isEmpty())
     {
         return;
@@ -1388,7 +1388,7 @@ void CMainWindow::slotLoadGISData()
     QString path   = cfg.value("Paths/lastGisPath",   QDir::homePath()).toString();
     QString filter = cfg.value("Paths/lastGisFilter", IGisProject::filedialogAllSupported).toString();
 
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Load GIS Data..."), path, IGisProject::filedialogLoadFilters, &filter);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Load GIS Data..."), path, IGisProject::filedialogLoadFilters, &filter, QFileDialog::DontUseNativeDialog);
 
     if(filenames.isEmpty())
     {
@@ -1422,7 +1422,7 @@ void CMainWindow::slotStoreView()
 
     SETTINGS;
     QString path = cfg.value("Paths/lastViewPath", QDir::homePath()).toString();
-    QString filename = QFileDialog::getSaveFileName( this, tr("Select output file"), path, tr("QMapShack View (*.view)"));
+    QString filename = QFileDialog::getSaveFileName( this, tr("Select output file"), path, tr("QMapShack View (*.view)"), nullptr, QFileDialog::DontUseNativeDialog);
 
     if(filename.isEmpty())
     {
@@ -1448,7 +1448,7 @@ void CMainWindow::slotLoadView()
 {
     SETTINGS;
     QString path = cfg.value("Paths/lastViewPath", QDir::homePath()).toString();
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select file to load"), path, tr("QMapShack View (*.view)"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select file to load"), path, tr("QMapShack View (*.view)"), nullptr, QFileDialog::DontUseNativeDialog);
 
     if(filename.isEmpty())
     {

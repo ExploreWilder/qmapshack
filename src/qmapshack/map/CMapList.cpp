@@ -254,7 +254,7 @@ void CMapList::slotMapHonk()
         mapPath = QDir::homePath();
     }
 
-    mapPath = QFileDialog::getExistingDirectory(CMainWindow::getBestWidgetForParent(), tr("Where do you want to store maps?"), mapPath);
+    mapPath = QFileDialog::getExistingDirectory(CMainWindow::getBestWidgetForParent(), tr("Where do you want to store maps?"), mapPath, QFileDialog::DontUseNativeDialog);
     if(mapPath.isEmpty())
     {
         return;

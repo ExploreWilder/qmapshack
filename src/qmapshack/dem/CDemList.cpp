@@ -255,7 +255,7 @@ void CDemList::slotDemHonk()
         demPath = QDir::homePath();
     }
 
-    demPath = QFileDialog::getExistingDirectory(CMainWindow::getBestWidgetForParent(), tr("Where do you want to store DEMs?"), demPath);
+    demPath = QFileDialog::getExistingDirectory(CMainWindow::getBestWidgetForParent(), tr("Where do you want to store DEMs?"), demPath, QFileDialog::DontUseNativeDialog);
     if(demPath.isEmpty())
     {
         return;

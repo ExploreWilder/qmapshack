@@ -79,7 +79,7 @@ void CMapVrtBuilder::slotSelectSourceFiles()
     SETTINGS;
     QString path = cfg.value("VrtBuilder/sourcePath", QDir::homePath()).toString();
 
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select files..."), path);
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select files..."), path, QString(), nullptr, QFileDialog::DontUseNativeDialog);
     if(files.isEmpty())
     {
         return;
@@ -109,7 +109,7 @@ void CMapVrtBuilder::slotSelectTargetFile()
     path = cfg.value("VrtBuilder/targetPath", path).toString();
 
 
-    QString file = QFileDialog::getSaveFileName(this, tr("Select target file..."), path, "GDAL vrt (*.vrt)");
+    QString file = QFileDialog::getSaveFileName(this, tr("Select target file..."), path, "GDAL vrt (*.vrt)", nullptr, QFileDialog::DontUseNativeDialog);
     if(file.isEmpty())
     {
         return;

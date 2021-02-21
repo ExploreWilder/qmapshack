@@ -87,7 +87,7 @@ void CExportDatabase::slotSetPath()
 {
     QString path = labelPath->text();
 
-    path = QFileDialog::getExistingDirectory(CMainWindow::self().getBestWidgetForParent(), tr("Select export path..."), path);
+    path = QFileDialog::getExistingDirectory(CMainWindow::self().getBestWidgetForParent(), tr("Select export path..."), path, QFileDialog::DontUseNativeDialog);
     if(!path.isEmpty())
     {
         labelPath->setText(path);

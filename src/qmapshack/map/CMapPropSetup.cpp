@@ -137,7 +137,7 @@ void CMapPropSetup::slotLoadTypeFile()
 {
     SETTINGS;
     QString path = cfg.value("Paths/lastTypePath", QDir::homePath()).toString();
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select type file..."), path, "Garmin type file (*.typ)");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select type file..."), path, "Garmin type file (*.typ)", nullptr, QFileDialog::DontUseNativeDialog);
     if(filename.isEmpty())
     {
         return;

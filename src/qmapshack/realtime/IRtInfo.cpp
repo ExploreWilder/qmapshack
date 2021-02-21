@@ -34,7 +34,7 @@ void IRtInfo::slotSetFilename()
 {
     SETTINGS;
     QString path = cfg.value("Paths/realtimeData", QDir::homePath()).toString();
-    QString filename = QFileDialog::getSaveFileName( this, tr("Select record file"), path, "QMapShack Record (*.rec)");
+    QString filename = QFileDialog::getSaveFileName( this, tr("Select record file"), path, "QMapShack Record (*.rec)", nullptr, QFileDialog::DontUseNativeDialog);
 
     if(filename.isEmpty())
     {

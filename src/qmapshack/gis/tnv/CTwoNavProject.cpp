@@ -159,7 +159,7 @@ bool CTwoNavProject::saveAs()
     QString path = cfg.value("Paths/lastGisPath", QDir::homePath()).toString();
 
     QString filter = filedialogFilterGPX;
-    QString fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save GIS data to..."), path, filedialogSaveFilters, &filter);
+    QString fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save GIS data to..."), path, filedialogSaveFilters, &filter, QFileDialog::DontUseNativeDialog);
 
     if(fn.isEmpty())
     {

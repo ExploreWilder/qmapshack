@@ -86,7 +86,7 @@ CGisListDB::CGisListDB(QWidget *parent)
             if(filename.isEmpty())
             {
                 QMessageBox::information(this, name, tr("Due to changes in the database system QMapShack forgot about the filename of your database '%1'. You have to select it again in the next step.").arg(name), QMessageBox::Ok);
-                filename = QFileDialog::getOpenFileName(this, tr("Select database file."), path, "QMapShack Database (*.db)");
+                filename = QFileDialog::getOpenFileName(this, tr("Select database file."), path, "QMapShack Database (*.db)", nullptr, QFileDialog::DontUseNativeDialog);
                 if(filename.isEmpty())
                 {
                     cfg.endGroup(); // name;
@@ -1070,7 +1070,7 @@ void CGisListDB::slotImport()
     QString path   = cfg.value("Paths/lastGisPath",   QDir::homePath()).toString();
     QString filter = cfg.value("Paths/lastGisFilter", IGisProject::filedialogAllSupported).toString();
 
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Import GIS Data..."), path, IGisProject::filedialogLoadFilters, &filter);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Import GIS Data..."), path, IGisProject::filedialogLoadFilters, &filter, QFileDialog::DontUseNativeDialog);
 
     if(filenames.isEmpty())
     {

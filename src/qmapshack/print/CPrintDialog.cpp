@@ -269,7 +269,7 @@ void CPrintDialog::slotSave()
     QString filterPNG = "PNG Image (*.png)";
     QString filterJPG = "JPEG Image (*.jpg)";
     QString filter    = filterPNG;
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save map..."), path, filterPNG + ";; " + filterJPG, &filter);
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save map..."), path, filterPNG + ";; " + filterJPG, &filter, QFileDialog::DontUseNativeDialog);
     if(filename.isEmpty())
     {
         return;

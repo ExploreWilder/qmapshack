@@ -84,7 +84,7 @@ CWptIconDialog::~CWptIconDialog()
 void CWptIconDialog::slotSetupPath()
 {
     QString path = labelIconPath->property("path").toString();
-    path = QFileDialog::getExistingDirectory(this, tr("Path to user icons..."), path);
+    path = QFileDialog::getExistingDirectory(this, tr("Path to user icons..."), path, QFileDialog::DontUseNativeDialog);
     if(path.isEmpty())
     {
         return;

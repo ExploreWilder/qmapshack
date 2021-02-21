@@ -1484,7 +1484,7 @@ void IPlot::slotSave()
 {
     SETTINGS;
     QString path = cfg.value("Paths/lastGraphPath", QDir::homePath()).toString();
-    QString filename = QFileDialog::getSaveFileName( this, tr("Select output file"), path, "PNG Image (*.png)");
+    QString filename = QFileDialog::getSaveFileName( this, tr("Select output file"), path, "PNG Image (*.png)", nullptr, QFileDialog::DontUseNativeDialog);
 
     if(filename.isEmpty())
     {

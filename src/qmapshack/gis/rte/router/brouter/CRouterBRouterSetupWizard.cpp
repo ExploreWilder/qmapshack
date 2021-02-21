@@ -344,7 +344,7 @@ void CRouterBRouterSetupWizard::beginLocalDirectory()
 
 void CRouterBRouterSetupWizard::slotLocalToolSelectDirectory()
 {
-    setup->localDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "", QFileDialog::ShowDirsOnly);
+    setup->localDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontUseNativeDialog);
     updateLocalDirectory();
 }
 

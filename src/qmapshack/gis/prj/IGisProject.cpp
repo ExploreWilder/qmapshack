@@ -445,7 +445,7 @@ bool IGisProject::saveAs(QString fn, QString filter)
         path += "/" + getName() + "." + ext;
 
 
-        fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save \"%1\" to...").arg(getName()), path, filedialogSaveFilters, &filter);
+        fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save \"%1\" to...").arg(getName()), path, filedialogSaveFilters, &filter, QFileDialog::DontUseNativeDialog);
 
         if(fn.isEmpty())
         {
@@ -502,7 +502,7 @@ bool IGisProject::saveAsStrictGpx11()
     QString filter = IGisProject::filedialogFilterGPX;
     path += "/" + getName() + "." + ext;
 
-    fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save \"%1\" to...").arg(getName()), path, "Strict GPX V 1.1 (*.gpx *.GPX)", &filter);
+    fn = QFileDialog::getSaveFileName(CMainWindow::getBestWidgetForParent(), tr("Save \"%1\" to...").arg(getName()), path, "Strict GPX V 1.1 (*.gpx *.GPX)", &filter, QFileDialog::DontUseNativeDialog);
 
     if(fn.isEmpty())
     {

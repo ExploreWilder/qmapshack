@@ -169,7 +169,7 @@ void CTemplateWidget::slotSetPath()
 {
     SETTINGS;
     QString path = cfg.value("TextEditWidget/templatePath", QDir::homePath()).toString();
-    path = QFileDialog::getExistingDirectory(this, tr("Template path..."), path);
+    path = QFileDialog::getExistingDirectory(this, tr("Template path..."), path, QFileDialog::DontUseNativeDialog);
     if(path.isEmpty())
     {
         return;
