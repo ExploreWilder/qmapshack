@@ -32,6 +32,7 @@ namespace vts
 {
     class Map;
     class Camera;
+    class CameraCredits;
     class Navigation;
 
     namespace renderer
@@ -40,6 +41,12 @@ namespace vts
         class RenderView;
     }
 }
+
+typedef enum CreditsType
+{
+    IMAGERY,
+    GEODATA
+} CreditsType;
 
 class Gl : public QOpenGLContext
 {
@@ -70,6 +77,9 @@ public:
 
     /// Copy resources to cache if not already existing, and load the mapConfig.
     void setupConfig();
+
+    /// Returns the imagery credits (imagery or geodata).
+    QString credits(CreditsType creditsType);
 
     bool event(QEvent *event);
     void tick();

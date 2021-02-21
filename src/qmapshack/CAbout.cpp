@@ -25,7 +25,7 @@
 #include <QtWidgets>
 #include <routino.h>
 
-CAbout::CAbout(QWidget *parent)
+CAbout::CAbout(QWidget *parent, const QString &credits3DImagery, const QString &credits3DGeodata)
     : QDialog(parent)
 {
     setupUi(this);
@@ -36,18 +36,6 @@ CAbout::CAbout(QWidget *parent)
     labelVersion->setText(VER_STR);
 #endif
 
-    labelQtVersion->setText(qVersion());
-    labelGDALVersion->setText(GDALVersionInfo("--version"));
-    labelProj4Version->setText(QString::number(PJ_VERSION));
-    if(Routino_CheckAPIVersion() != ROUTINO_ERROR_NONE)
-    {
-        labelRoutinoVersion->setText(tr("%1 (API V%2, expected V%3)").arg(Routino_Version).arg(ROUTINO_API_VERSION).arg(Routino_APIVersion));
-    }
-    else
-    {
-        labelRoutinoVersion->setText(tr("%1 (API V%2)").arg(Routino_Version).arg(Routino_APIVersion));
-    }
-
 #if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
     #if defined (HAVE_DBUS)
     labelNoDBus->setText("");
@@ -56,11 +44,10 @@ CAbout::CAbout(QWidget *parent)
     #endif
 #endif
 
-    const QString& missing = tr(
-        "If you think your name is missing you probably have forgotten "
-        "to add your copyright in the source files."
-        );
-    labelContributors->setText(QString(contributors) + "\n\n" + missing);
+    labelContributors->setText(QString(contributors));
+
+    label3DMapImagery->setText(credits3DImagery.isEmpty() ? "N/A" : credits3DImagery);
+    label3DMapData->setText(credits3DGeodata.isEmpty() ? "N/A" : credits3DGeodata);
 }
 
 CAbout::~CAbout()

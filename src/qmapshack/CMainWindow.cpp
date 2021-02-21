@@ -967,7 +967,7 @@ void CMainWindow::getSlopeAt(const QPolygonF &pos, QPolygonF& slope) const
 
 void CMainWindow::slotAbout()
 {
-    CAbout dlg(this);
+    CAbout dlg(this, window3DMap->credits(CreditsType::IMAGERY), window3DMap->credits(CreditsType::GEODATA));
     dlg.exec();
 }
 

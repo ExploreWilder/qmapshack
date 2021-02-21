@@ -17,12 +17,7 @@
 	"boundLayers" : 
 	{
 		"default-satellite": {
-            "credits": {
-                "eox-it": {
-                    "id": 990,
-                    "notice": "Datasource: {copy} [https://s2maps.eu EOX IT Services GmbH]"
-                }
-            },
+            "credits": ["imagery"],
             "lodRange": [1, 15],
             "maskUrl": "{lod}-{x}-{y}.mask",
             "tileRange": [
@@ -44,22 +39,14 @@
 	},
 	"credits" : 
 	{
-		"jonathan": {
-		    "id": 110,
-		    "notice": "{copy}2005-16 Jonathan de Ferranti"
+		"imagery": {
+		    "id": 2,
+		    "notice": "{copy} EOX IT Services GmbH, {copy} 2005-16 Jonathan de Ferranti"
 		},
-		"melown": {
-		    "id": 109,
-		    "notice": "{copy}{Y} Melown Technologies SE"
-		},
-		"klokantech": {
-		    "id": 115,
-		    "notice": "[https://www.maptiler.com/copyright/ {copy} MapTiler]"
-		},
-		"osm": {
-		    "id": 120,
-		    "notice": "Datasource: {copy} [https://openstreetmap.org/ OpenStreetMap], under [https://www.openstreetmap.org/copyright ODbL]"
-		}
+"geodata": {
+            "id": 3,
+            "notice": "{copy} OpenStreetMap under ODbL, {copy} 2004-07 peaklist.org, {copy} MapTiler"
+        }
 	},
 	"freeLayers" : 
 	{

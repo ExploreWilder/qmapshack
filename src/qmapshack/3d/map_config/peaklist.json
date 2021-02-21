@@ -1,10 +1,5 @@
 {
-    "credits": {
-        "peaklist-org": {
-            "id": 12,
-            "notice": "{copy}2004-07 [http://www.peaklist.org/ultras.html peaklist.org]"
-        }
-    },
+    "credits": ["geodata"],
     "displaySize": 2048,
     "extents": {
         "ll": [-6148519.2026110077, -6378104.7730843704, -6347343.1908062762],

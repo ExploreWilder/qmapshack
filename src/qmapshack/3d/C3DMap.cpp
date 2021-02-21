@@ -25,6 +25,7 @@
 #include <vts-browser/map.hpp>
 #include <vts-browser/mapOptions.hpp>
 #include <vts-browser/camera.hpp>
+#include <vts-browser/cameraCredits.hpp>
 #include <vts-browser/navigation.hpp>
 #include <vts-browser/navigationOptions.hpp>
 #include <vts-browser/position.hpp>
@@ -131,6 +132,26 @@ C3DMap::~C3DMap()
     if (map)
         map->renderFinalize();
     dataThread.wait();
+}
+
+QString C3DMap::credits(CreditsType creditsType)
+{
+    QString credits;
+    bool first = true;
+    const vts::CameraCredits::Scope *scope = (creditsType == IMAGERY) ? &camera->credits().imagery : &camera->credits().geodata;
+    for (const auto &it : scope->credits)
+    {
+        if (first)
+        {
+            first = false;
+        }
+        else
+        {
+            credits += ", ";
+        }
+        credits += QString::fromUtf8(it.notice.c_str());
+    }
+    return credits;
 }
 
 void C3DMap::setupConfig()
