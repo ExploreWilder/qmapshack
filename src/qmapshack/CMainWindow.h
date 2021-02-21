@@ -172,6 +172,7 @@ private slots:
     void slotCurrentTabMaps(int i);
     void slotCurrentTabDem(int i);
     void slotMousePosition(const QPointF& pos, qreal ele, qreal slope);
+    void slotMouse3DPosition(const QPointF& pos, qreal ele);
     void slotMoveCurrentMap(const QPointF& pos);
     void slotZoomCurrentMap(QWheelEvent *event);
     void slotUpdateTabWidgets();

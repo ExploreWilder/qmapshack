@@ -31,6 +31,7 @@
 #include <vts-browser/position.hpp>
 #include <vts-browser/mapCallbacks.hpp>
 #include <vts-renderer/renderer.hpp>
+#include <cmath>
 #include <stdexcept>
 #include <iostream>
 
@@ -184,6 +185,19 @@ void C3DMap::mouseMove(QMouseEvent *event)
     lastMousePosition = event->globalPos();
 
     double n[3] = { (double)diff.x(), (double)diff.y(), 0 };
+
+    if (map->getMapconfigReady())
+    {
+        double posPhy[3], posNav[3];
+        const QPointF eventPx = event->localPos();
+        const double posPx[2] = {eventPx.x(), eventPx.y()};
+        view->getWorldPosition(posPx, posPhy);
+        map->convert(posPhy, posNav, vts::Srs::Physical, vts::Srs::Navigation);
+        if (!std::isnan(posNav[2]))
+        {
+            emit sigMouseMove(QPointF{posNav[0], posNav[1]}, (qreal) posNav[2]);
+        }
+    }
 
     if (event->buttons() & Qt::LeftButton)
     {

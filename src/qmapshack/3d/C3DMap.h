@@ -105,6 +105,7 @@ signals:
     void sigMapReady();
     void sigMoveMap(const QPointF& pos);
     void sigZoomMap(QWheelEvent *event);
+    void sigMouseMove(const QPointF& pos, qreal ele);
 
 public slots:
     /**

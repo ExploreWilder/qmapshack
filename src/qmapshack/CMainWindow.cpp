@@ -239,6 +239,7 @@ CMainWindow::CMainWindow()
     connect(tabDem,                      &QTabWidget::currentChanged,    this,      &CMainWindow::slotCurrentTabDem);
     connect(window3DMap,                 &C3DMap::sigMoveMap,            this,      &CMainWindow::slotMoveCurrentMap);
     connect(window3DMap,                 &C3DMap::sigZoomMap,            this,      &CMainWindow::slotZoomCurrentMap);
+    connect(window3DMap,                 &C3DMap::sigMouseMove,          this,      &CMainWindow::slotMouse3DPosition);
 
     if(IAppSetup::getPlatformInstance()->findExecutable("qmaptool").isEmpty())
     {
@@ -1228,6 +1229,18 @@ void CMainWindow::slotMousePosition(const QPointF& pos, qreal ele, qreal slope)
     {
         lblPosGrid->hide();
     }
+}
+
+void CMainWindow::slotMouse3DPosition(const QPointF& pos, qreal ele)
+{
+    QString str;
+    IUnit::degToStr(pos.x(), pos.y(), str);
+    lblPosWGS84->setText(str);
+
+    QString val, unit;
+    IUnit::self().meter2elevation(ele, val, unit);
+    lblElevation->setText(tr("Ele.: %1%2").arg(val).arg(unit));
+    lblElevation->show();
 }
 
 void CMainWindow::slotMoveCurrentMap(const QPointF& pos)
