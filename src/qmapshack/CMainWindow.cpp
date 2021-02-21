@@ -141,7 +141,6 @@ CMainWindow::CMainWindow()
     dockRealtime->setWidget(widgetRtWorkspace);
 
     window3DMap = new C3DMap();
-    widget3DMap = QWidget::createWindowContainer(window3DMap);
     dock3DMaps->setWidget(QWidget::createWindowContainer(window3DMap));
 
     geoSearchWeb = new CGeoSearchWeb(this);
@@ -292,7 +291,7 @@ CMainWindow::CMainWindow()
     tabWidget->setCurrentIndex(cfg.value("visibleCanvas", 0).toInt());
     cfg.endGroup(); // Canvas
 
-
+    connect(window3DMap, &C3DMap::sigMapReady, getVisibleCanvas(), &CCanvas::slotEmitSigZoomMap);
 
     QStatusBar * status = statusBar();
     lblPosWGS84 = new QLabel(status);

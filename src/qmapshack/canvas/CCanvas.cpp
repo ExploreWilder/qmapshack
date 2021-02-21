@@ -702,12 +702,12 @@ void CCanvas::wheelEvent(QWheelEvent * e)
     map->convertRad2Px(posFocus);
     posFocus -= (pos - pt1);
     map->convertPx2Rad(posFocus);
-    emitSigZoomMap();
+    slotEmitSigZoomMap();
 
     update();
 }
 
-void CCanvas::emitSigZoomMap()
+void CCanvas::slotEmitSigZoomMap()
 {
     if(labelHelp != nullptr && !labelHelp->isVisible())
     {
@@ -748,12 +748,12 @@ void CCanvas::keyPressEvent(QKeyEvent * e)
     {
     case Qt::Key_Plus:
         setZoom(true, needsRedraw);
-        emitSigZoomMap();
+        slotEmitSigZoomMap();
         break;
 
     case Qt::Key_Minus:
         setZoom(false, needsRedraw);
-        emitSigZoomMap();
+        slotEmitSigZoomMap();
         break;
 
     /* move the map with keys up, down, left and right */
@@ -1381,7 +1381,7 @@ bool CCanvas::gestureEvent(QGestureEvent* e)
                 {
                     moveMap(move);
                 }
-                emitSigZoomMap();
+                slotEmitSigZoomMap();
                 pinch->setTotalScaleFactor(1.0f);
                 slotTriggerCompleteUpdate(needsRedraw);
             }

@@ -27,6 +27,7 @@
 #include <vts-browser/navigation.hpp>
 #include <vts-browser/navigationOptions.hpp>
 #include <vts-browser/position.hpp>
+#include <vts-browser/mapCallbacks.hpp>
 #include <vts-renderer/renderer.hpp>
 #include <stdexcept>
 #include <iostream>
@@ -67,6 +68,9 @@ void DataThread::run()
 
 C3DMap::C3DMap()
 {
+    // make the window invisible until docked
+    setFlag(Qt::BypassWindowManagerHint);
+
     QSurfaceFormat format;
     format.setVersion(3, 3);
     format.setProfile(QSurfaceFormat::CoreProfile);
@@ -99,6 +103,10 @@ C3DMap::C3DMap()
             "https://cdn.melown.com/mario/store/melown2015/"
             "map-config/melown/Melown-Earth-Intergeo-2017/mapConfig.json",
             "");
+    map->callbacks().mapconfigReady = [&]() -> void
+    {
+        emit sigMapReady();
+    };
     camera = map->createCamera();
     navigation = camera->createNavigation();
 
@@ -234,6 +242,10 @@ void C3DMap::tick()
 
 void C3DMap::slotMoveMap(const QPointF& pos)
 {
+    if (!map->getMapconfigReady())
+    {
+        return; // do nothing if the map is not ready
+    }
     vts::Position currentPosition(navigation->getPosition());
     currentPosition.point[0] = pos.x();
     currentPosition.point[1] = pos.y();
@@ -242,6 +254,10 @@ void C3DMap::slotMoveMap(const QPointF& pos)
 
 void C3DMap::slotZoomMap(const QPointF& pos, qreal h)
 {
+    if (!map->getMapconfigReady())
+    {
+        return;
+    }
     slotMoveMap(pos);
     navigation->setViewExtent(h);
 }

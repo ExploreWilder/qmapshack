@@ -243,7 +243,6 @@ private:
     CGisDatabase * widgetGisDatabase;
     CRtWorkspace * widgetRtWorkspace;
     C3DMap * window3DMap;
-    QWidget * widget3DMap;
 
     CToolBarConfig * toolBarConfig;
     CGeoSearchConfig * geoSearchConfig;

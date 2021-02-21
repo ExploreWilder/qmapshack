@@ -99,9 +99,6 @@ public:
     void moveMap(const QPointF &delta);
     void zoomTo(const QRectF& rect);
 
-    /// Wrapper for sigZoomMap() with the latest update.
-    void emitSigZoomMap();
-
     void displayInfo(const QPoint& px);
     poi_t findPOICloseBy(const QPoint& px) const;
 
@@ -206,6 +203,9 @@ signals:
     void sigResize(const QSize& size);
 
 public slots:
+    /// Wrapper for sigZoomMap() with the latest update.
+    void slotEmitSigZoomMap();
+
     void slotTriggerCompleteUpdate(CCanvas::redraw_e flags);
     void slotUpdateTrackInfo(bool updateVisuals);
     void slotCheckTrackOnFocus();
