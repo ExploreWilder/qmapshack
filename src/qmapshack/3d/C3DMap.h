@@ -68,6 +68,9 @@ public:
     C3DMap();
     ~C3DMap();
 
+    /// Copy resources to cache if not already existing, and laod the mapConfig.
+    void setupConfig();
+
     bool event(QEvent *event);
     void tick();
 

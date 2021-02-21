@@ -957,5 +957,12 @@
         <file>templates/Hiking_Tour_Summary_(Advanced).ui</file>
         <file>templates/Cycling_Tour_Summary.ui</file>
         <file>templates/Running_Summary.ui</file>
+        <file>3d/map_config/main_config.json</file>
+        <file>3d/map_config/osm-maptiler.json</file>
+        <file>3d/map_config/osm-maptiler.style.json</file>
+        <file>3d/map_config/peaklist.geo.json</file>
+        <file>3d/map_config/peaklist.json</file>
+        <file>3d/map_config/peaklist.style.json</file>
+        <file>3d/map_config/webtrack.style.json</file>
     </qresource>
 </RCC>

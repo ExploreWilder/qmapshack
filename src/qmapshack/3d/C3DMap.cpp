@@ -17,6 +17,7 @@
 **********************************************************************************************/
 
 #include "3d/C3DMap.h"
+#include "setup/IAppSetup.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include <QWheelEvent>
@@ -99,10 +100,7 @@ C3DMap::C3DMap()
     vts::MapCreateOptions mapopts;
     mapopts.clientId = "vts-browser-qt";
     map = dataThread.map = std::make_shared<vts::Map>(mapopts);
-    map->setMapconfigPath(
-            "https://cdn.melown.com/mario/store/melown2015/"
-            "map-config/melown/Melown-Earth-Intergeo-2017/mapConfig.json",
-            "");
+    setupConfig();
     map->callbacks().mapconfigReady = [&]() -> void
     {
         emit sigMapReady();
@@ -133,6 +131,30 @@ C3DMap::~C3DMap()
     if (map)
         map->renderFinalize();
     dataThread.wait();
+}
+
+void C3DMap::setupConfig()
+{
+    QString cachePath = IAppSetup::getPlatformInstance()->defaultCachePath();
+    QDir mapConfigDir(cachePath);
+    QString filePath;
+    QVector<QString> mapConfig;
+
+    mapConfig << "main_config"
+              << "osm-maptiler"
+              << "osm-maptiler.style"
+              << "peaklist.geo"
+              << "peaklist"
+              << "peaklist.style"
+              << "webtrack.style";
+
+    mapConfigDir.mkpath("3d/map_config");
+    for (int i = mapConfig.size() - 1; i >= 0; --i) {
+        filePath = "/3d/map_config/" + mapConfig.at(i) + ".json";
+        QFile::copy(":" + filePath, cachePath + filePath);
+    }
+    filePath = "file://" + cachePath + filePath;
+    map->setMapconfigPath(filePath.toStdString(), "");
 }
 
 void C3DMap::mouseMove(QMouseEvent *event)
