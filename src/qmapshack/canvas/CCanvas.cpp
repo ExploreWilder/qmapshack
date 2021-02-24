@@ -652,6 +652,7 @@ void CCanvas::mouseMoveEvent(QMouseEvent * e)
     qreal ele = dem->getElevationAt(pos, true);
     qreal slope = dem->getSlopeAt(pos, true);
     emit sigMousePosition(pos * RAD_TO_DEG, ele, slope);
+    emit sigCursorVisibility(ele != NOFLOAT);
 
     mouse->mouseMoveEvent(e);
     QWidget::mouseMoveEvent(e);
@@ -736,6 +737,7 @@ void CCanvas::leaveEvent(QEvent *)
         CCanvas::restoreOverrideCursor("leaveEvent");
     }
 
+    emit sigCursorVisibility(false);
     setMouseTracking(false);
 }
 

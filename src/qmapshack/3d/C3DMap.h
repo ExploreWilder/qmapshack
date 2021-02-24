@@ -26,7 +26,8 @@
 #include <QThread>
 #include <QOpenGLContext>
 #include <QSurface>
-#include <QStatusBar>
+#include <vts-browser/math.hpp>
+#include <vts-renderer/classes.hpp>
 
 namespace vts
 {
@@ -34,11 +35,14 @@ namespace vts
     class Camera;
     class CameraCredits;
     class Navigation;
+    class ResourceInfo;
+    class GpuMeshSpec;
 
     namespace renderer
     {
         class RenderContext;
         class RenderView;
+        class Mesh;
     }
 }
 
@@ -47,6 +51,13 @@ typedef enum CreditsType
     IMAGERY,
     GEODATA
 } CreditsType;
+
+typedef struct Mark
+{
+    vts::vec3 coord = {};
+    vts::vec3f color = {};
+    bool visible = false;
+} Mark;
 
 class Gl : public QOpenGLContext
 {
@@ -75,6 +86,19 @@ public:
     C3DMap();
     ~C3DMap();
 
+    /// Load mesh sphere and line.
+    void loadResources();
+
+    /**
+      @brief Render the cursor marker with its location and color already updated.
+
+      The elevation of the marker must be defined because guessing the altitude
+      from the rendered surface is tricky. Please read the GitHub issue in the
+      Melown repo for further information. The marker is hidden if the altitude
+      is not a number.
+     */
+    void renderCursorMark();
+
     /// Copy resources to cache if not already existing, and load the mapConfig.
     void setupConfig();
 
@@ -91,6 +115,8 @@ public:
 
     std::shared_ptr<Gl> gl;
     std::shared_ptr<vts::renderer::RenderContext> context;
+    std::shared_ptr<vts::renderer::Mesh> meshSphere;
+    std::shared_ptr<vts::renderer::Mesh> meshLine;
     std::shared_ptr<vts::Map> map;
     std::shared_ptr<vts::Camera> camera;
     std::shared_ptr<vts::Navigation> navigation;
@@ -100,6 +126,7 @@ public:
     std::chrono::high_resolution_clock::time_point lastTime;
 
     DataThread dataThread;
+    Mark cursorMark;
 
 signals:
     void sigMapReady();
@@ -108,6 +135,12 @@ signals:
     void sigMouseMove(const QPointF& pos, qreal ele);
 
 public slots:
+    /**
+      @brief Change the cursor visibility.
+      @param visible True to be displayed, false to hide.
+     */
+    void slotCursorVisibility(const bool visible);
+
     /**
        @brief Move the map to a specified position.
        @param pos The position of focus (center) in degree.
@@ -120,6 +153,13 @@ public slots:
        @param h The view extent in meters.
      */
     void slotZoomMap(const QPointF& pos, qreal h);
+
+    /**
+       @brief Update the pointer position based on the 2D map.
+       @param pos The cursor position in degree.
+       @param ele The altitude in meters.
+     */
+    void slotMouseMove(const QPointF& pos, qreal ele);
 };
 
 #endif //C3DMAP_H

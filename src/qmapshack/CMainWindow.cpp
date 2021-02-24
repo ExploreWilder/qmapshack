@@ -668,9 +668,11 @@ CCanvas *CMainWindow::addView(const QString& name)
 {
     CCanvas * view = new CCanvas(tabWidget, name);
     tabWidget->addTab(view, view->objectName());
-    connect(view, &CCanvas::sigMousePosition, this, &CMainWindow::slotMousePosition);
-    connect(view, &CCanvas::sigMoveMap, window3DMap, &C3DMap::slotMoveMap);
-    connect(view, &CCanvas::sigZoomMap, window3DMap, &C3DMap::slotZoomMap);
+    connect(view, &CCanvas::sigMousePosition,               this, &CMainWindow::slotMousePosition);
+    connect(view, &CCanvas::sigMousePosition,               window3DMap, &C3DMap::slotMouseMove);
+    connect(view, &CCanvas::sigCursorVisibility,            window3DMap, &C3DMap::slotCursorVisibility);
+    connect(view, &CCanvas::sigMoveMap,                     window3DMap, &C3DMap::slotMoveMap);
+    connect(view, &CCanvas::sigZoomMap,                     window3DMap, &C3DMap::slotZoomMap);
     connect(actionShowTrackHighlight, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowMinMaxSummary, &QAction::changed,     view, [view] {view->slotUpdateTrackInfo(false);});
     connect(actionShowTrackInfoTable, &QAction::changed,    view, [view] {view->slotUpdateTrackInfo(false);});
@@ -1241,6 +1243,9 @@ void CMainWindow::slotMouse3DPosition(const QPointF& pos, qreal ele)
     IUnit::self().meter2elevation(ele, val, unit);
     lblElevation->setText(tr("Ele.: %1%2").arg(val).arg(unit));
     lblElevation->show();
+
+    lblSlope->hide();
+    lblPosGrid->hide();
 }
 
 void CMainWindow::slotMoveCurrentMap(const QPointF& pos)

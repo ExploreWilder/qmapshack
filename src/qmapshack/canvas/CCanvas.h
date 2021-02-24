@@ -201,6 +201,7 @@ signals:
     void sigMove();
     void sigMoveMap(const QPointF& pos);
     void sigResize(const QSize& size);
+    void sigCursorVisibility(const bool visible);
 
 public slots:
     /// Wrapper for sigZoomMap() with the latest update.

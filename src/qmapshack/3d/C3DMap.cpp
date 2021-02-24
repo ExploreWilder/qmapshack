@@ -21,11 +21,14 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <vts-browser/buffer.hpp>
 #include <vts-browser/log.hpp>
+#include <vts-browser/math.hpp>
 #include <vts-browser/map.hpp>
 #include <vts-browser/mapOptions.hpp>
 #include <vts-browser/camera.hpp>
 #include <vts-browser/cameraCredits.hpp>
+#include <vts-browser/cameraDraws.hpp>
 #include <vts-browser/navigation.hpp>
 #include <vts-browser/navigationOptions.hpp>
 #include <vts-browser/position.hpp>
@@ -102,6 +105,7 @@ C3DMap::C3DMap()
     vts::MapCreateOptions mapopts;
     mapopts.clientId = "vts-browser-qt";
     map = dataThread.map = std::make_shared<vts::Map>(mapopts);
+    loadResources();
     setupConfig();
     map->callbacks().mapconfigReady = [&]() -> void
     {
@@ -133,6 +137,41 @@ C3DMap::~C3DMap()
     if (map)
         map->renderFinalize();
     dataThread.wait();
+}
+
+void C3DMap::loadResources()
+{
+    // load mesh sphere
+    {
+        meshSphere = std::make_shared<vts::renderer::Mesh>();
+        vts::GpuMeshSpec spec(vts::readInternalMemoryBuffer("data/meshes/sphere.obj"));
+        assert(spec.faceMode == vts::GpuMeshSpec::FaceMode::Triangles);
+        spec.attributes[0].enable = true;
+        spec.attributes[0].stride = sizeof(vts::vec3f) + sizeof(vts::vec2f);
+        spec.attributes[0].components = 3;
+        spec.attributes[1].enable = true;
+        spec.attributes[1].stride = sizeof(vts::vec3f) + sizeof(vts::vec2f);
+        spec.attributes[1].components = 2;
+        spec.attributes[1].offset = sizeof(vts::vec3f);
+        vts::ResourceInfo info;
+        meshSphere->load(info, spec, "data/meshes/sphere.obj");
+    }
+
+    // load mesh line
+    {
+        meshLine = std::make_shared<vts::renderer::Mesh>();
+        vts::GpuMeshSpec spec(vts::readInternalMemoryBuffer("data/meshes/line.obj"));
+        assert(spec.faceMode == vts::GpuMeshSpec::FaceMode::Lines);
+        spec.attributes[0].enable = true;
+        spec.attributes[0].stride = sizeof(vts::vec3f) + sizeof(vts::vec2f);
+        spec.attributes[0].components = 3;
+        spec.attributes[1].enable = true;
+        spec.attributes[1].stride = sizeof(vts::vec3f) + sizeof(vts::vec2f);
+        spec.attributes[1].components = 2;
+        spec.attributes[1].offset = sizeof(vts::vec3f);
+        vts::ResourceInfo info;
+        meshLine->load(info, spec, "data/meshes/line.obj");
+    }
 }
 
 QString C3DMap::credits(CreditsType creditsType)
@@ -282,6 +321,7 @@ void C3DMap::tick()
         view->options().targetFrameBuffer = gl->defaultFramebufferObject();
         view->options().width = size.width();
         view->options().height = size.height();
+        renderCursorMark();
         view->render();
 
 #ifdef NDEBUG
@@ -317,5 +357,43 @@ void C3DMap::slotZoomMap(const QPointF& pos, qreal h)
     }
     slotMoveMap(pos);
     navigation->setViewExtent(h);
+}
+
+void C3DMap::slotCursorVisibility(const bool visible)
+{
+    cursorMark.visible = visible;
+}
+
+void C3DMap::slotMouseMove(const QPointF& pos, qreal ele)
+{
+    if (!map->getMapconfigReady())
+    {
+        return;
+    }
+    double posNav[3] = {pos.x(), pos.y(), ele}, posPhy[3];
+    map->convert(posNav, posPhy, vts::Srs::Navigation, vts::Srs::Physical);
+    cursorMark.coord = vts::vec3(posPhy[0], posPhy[1], posPhy[2]);
+    cursorMark.color = vts::vec3f(1., 1., 0.);
+}
+
+void C3DMap::renderCursorMark()
+{
+    if (std::isnan(cursorMark.coord(0)) || !cursorMark.visible)
+    {
+        return;
+    }
+
+    vts::mat4 view = vts::rawToMat4(camera->draws().camera.view);
+    vts::mat4 mv = view * vts::translationMatrix(cursorMark.coord) * vts::scaleMatrix(navigation->getViewExtent() * 0.005);
+    vts::mat4f mvf = mv.cast<float>();
+    vts::DrawInfographicsTask t;
+    vts::vec4f c = vts::vec3to4(cursorMark.color, 1);
+    for (int i = 0; i < 4; i++)
+    {
+        t.color[i] = c(i);
+    }
+    t.mesh = meshSphere;
+    vts::matToRaw(mvf, t.mv);
+    camera->draws().infographics.push_back(t);
 }
 

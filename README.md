@@ -8,7 +8,7 @@
 
 * The powerful route planning software: [QMapShack](https://github.com/Maproom/qmapshack/wiki),
 * The immersive 3D map browser: [VTS frontend](https://github.com/melowntech/vts-browser-cpp),
-* The best maps with global coverage through the [Melown](https://www.melowntech.com/) and [ExploreWilder](https://explorewilder.com/) proxies.
+* Probably the best maps with global coverage through the [Melown](https://www.melowntech.com/) and [ExploreWilder](https://explorewilder.com/) proxies.
 
 # Work in Progress
 
@@ -55,8 +55,8 @@ git clone -b 3D --recursive https://github.com/ExloreWilder/qmapshack
 mkdir build_QMapShack
 cd build_QMapShack
 ccmake ../qmapshack
-export CPLUS_INCLUDE_PATH=/usr/include/gdal
-export C_INCLUDE_PATH=/usr/include/gdal
+export CPLUS_INCLUDE_PATH=/usr/include/gdal:/usr/include/eigen3
+export C_INCLUDE_PATH=/usr/include/gdal:/usr/include/eigen3
 make --jobs=`nproc`
 ```
 
