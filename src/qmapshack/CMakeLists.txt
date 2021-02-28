@@ -22,9 +22,10 @@ add_definitions(-DROUTINO_XML_PATH=${ROUTINO_XML_PATH})
 # All source files needed to compile
 ###############################################################################################
 
-set( SRCS  
-    3d/C3DMap.cpp  
-    CAbout.cpp    
+set( SRCS
+    3d/C3DMap.cpp
+    CAbout.cpp
+    CAuth.cpp
     CMainWindow.cpp
     CSingleInstanceProxy.cpp
     GeoMath.cpp
@@ -373,6 +374,7 @@ endif(WIN32)
 
 set( HDRS
     3d/C3DMap.h
+    CAuth.h
     CAbout.h
     CMainWindow.h
     CSingleInstanceProxy.h
@@ -728,6 +730,7 @@ set( HDRS
 endif(WIN32)
 
 set( UIS
+    IAuth.ui
     IAbout.ui
     IMainWindow.ui
     canvas/ICanvasSetup.ui

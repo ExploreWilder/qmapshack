@@ -65,3 +65,10 @@ And run the application.
 ```
 ./bin/qmapshack
 ```
+
+If you edit the program, re-compile:
+
+```
+export CPLUS_INCLUDE_PATH=/usr/include/gdal:/usr/include/eigen3
+make --jobs=`nproc`
+```

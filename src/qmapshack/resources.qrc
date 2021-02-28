@@ -948,6 +948,7 @@
         <file>map/World.gemf</file>
         <file>dem/World_Online_SRTM900.wcs</file>
         <file>pics/about.png</file>
+        <file>pics/background.jpg</file>
         <file>pics/compass.png</file>
         <file>pics/noMap256x256.png</file>
         <file>pics/splash.png</file>

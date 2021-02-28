@@ -17,10 +17,12 @@
 **********************************************************************************************/
 
 #include "3d/C3DMap.h"
+#include "CAuth.h"
 #include "setup/IAppSetup.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QJsonDocument>
 #include <vts-browser/buffer.hpp>
 #include <vts-browser/log.hpp>
 #include <vts-browser/math.hpp>
@@ -72,10 +74,13 @@ void DataThread::run()
     map->dataAllRun();
 }
 
-C3DMap::C3DMap()
+C3DMap::C3DMap(const CAuth &auth)
 {
     // make the window invisible until docked
     setFlag(Qt::BypassWindowManagerHint);
+
+    bingUrl = auth.getBingUrl();
+    uuid = auth.getUuid();
 
     QSurfaceFormat format;
     format.setVersion(3, 3);
@@ -103,10 +108,30 @@ C3DMap::C3DMap()
     vts::renderer::loadGlFunctions(&openglFunctionPointerProc);
 
     vts::MapCreateOptions mapopts;
-    mapopts.clientId = "vts-browser-qt";
+
+    // application ID that is sent with all resources:
+    mapopts.clientId = "qmapshack-explorewilder";
+
+    // font to be used: (broken link if defined in the mapConfig file)
+    mapopts.geodataFontFallback = "https://cdn.melown.com/libs/vtsjs/fonts/noto-basic/1.0.0/noto.fnt";
+
     map = dataThread.map = std::make_shared<vts::Map>(mapopts);
     loadResources();
-    setupConfig();
+#ifdef NDEBUG
+    try
+    {
+#endif
+
+        setupConfig();
+
+#ifdef NDEBUG
+    }
+    catch(...)
+    {
+        this->close();
+        return;
+    }
+#endif
     map->callbacks().mapconfigReady = [&]() -> void
     {
         emit sigMapReady();
@@ -210,10 +235,47 @@ void C3DMap::setupConfig()
               << "webtrack.style";
 
     mapConfigDir.mkpath("3d/map_config");
-    for (int i = mapConfig.size() - 1; i >= 0; --i) {
+
+    // copy static config
+    for (int i = 1; i < mapConfig.size(); ++i) {
         filePath = "/3d/map_config/" + mapConfig.at(i) + ".json";
         QFile::copy(":" + filePath, cachePath + filePath);
     }
+
+    // open and load the main mapConfig
+    filePath = "/3d/map_config/" + mapConfig.first() + ".json";
+    QFile mapConfigFile(":" + filePath);
+    if (!mapConfigFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        throw std::runtime_error("Failed to open mapConfig from resources");
+    }
+
+    QJsonDocument mapConfigJsonDoc = QJsonDocument::fromJson(mapConfigFile.readAll());
+    if (!mapConfigJsonDoc.isObject())
+    {
+        throw std::runtime_error("Failed to load mapConfig");
+    }
+
+    // update the dynamic Bing URL
+    QJsonObject root = mapConfigJsonDoc.object();
+    QJsonObject res1 = root["boundLayers"].toObject();
+    QJsonObject res2 = res1["world-satellite-bing"].toObject();
+    res2["url"] = bingUrl;
+    res1["world-satellite-bing"] = res2;
+    root["boundLayers"] = res1;
+    mapConfigJsonDoc.setObject(root);
+
+    // save to a mapConfig that will be used for the session
+    QFile dynamicMapConfigFile(cachePath + filePath);
+    if (!dynamicMapConfigFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        throw std::runtime_error("Failed to open the temporary mapConfig");
+    }
+    if (dynamicMapConfigFile.write(mapConfigJsonDoc.toJson(QJsonDocument::Compact)) == -1)
+    {
+        throw std::runtime_error("Failed to write the temporary mapConfig");
+    }
+    
     filePath = "file://" + cachePath + filePath;
     map->setMapconfigPath(filePath.toStdString(), "");
 }
@@ -267,6 +329,21 @@ void C3DMap::mouseWheel(QWheelEvent *event)
     emit sigZoomMap(event);
 }
 
+void C3DMap::mouseDoubleClick(QMouseEvent *event)
+{
+    vts::renderer::RenderOptions &ro = view->options();
+    const double padding = std::min(ro.width, ro.height) * .15 * (1. + .5 / 2.);
+    const QPointF eventPx = event->localPos();
+
+    if (eventPx.x() < padding && (eventPx.y() + padding) > ro.height)
+    {
+        double rot[3];
+        navigation->getRotation(rot);
+        rot[0] = 0.; // north up
+        navigation->setRotation(rot);
+    }
+}
+
 bool C3DMap::event(QEvent *event)
 {
     switch (event->type())
@@ -276,6 +353,9 @@ bool C3DMap::event(QEvent *event)
         return true;
     case QEvent::MouseMove:
         mouseMove(dynamic_cast<QMouseEvent*>(event));
+        return true;
+    case QEvent::MouseButtonDblClick:
+        mouseDoubleClick(dynamic_cast<QMouseEvent*>(event));
         return true;
     case QEvent::MouseButtonPress:
         mousePress(dynamic_cast<QMouseEvent*>(event));
@@ -323,6 +403,7 @@ void C3DMap::tick()
         view->options().height = size.height();
         renderCursorMark();
         view->render();
+        renderCompass();
 
 #ifdef NDEBUG
     }
@@ -335,6 +416,17 @@ void C3DMap::tick()
 
     // finish the frame
     gl->swapBuffers(this);
+}
+
+void C3DMap::renderCompass()
+{
+    vts::renderer::RenderOptions &ro = view->options();
+    const double size = std::min(ro.width, ro.height) * .15;
+    const double offset = size * .5;
+    const double posSize[3] = { offset, offset, size };
+    double rot[3];
+    navigation->getRotation(rot);
+    view->renderCompass(posSize, rot);
 }
 
 void C3DMap::slotMoveMap(const QPointF& pos)

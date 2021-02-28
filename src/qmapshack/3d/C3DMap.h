@@ -19,6 +19,7 @@
 #ifndef C3DMAP_H
 #define C3DMAP_H
 
+#include "CAuth.h"
 #include <memory>
 #include <chrono>
 #include <QWindow>
@@ -83,7 +84,7 @@ class C3DMap : public QWindow
 {
     Q_OBJECT
 public:
-    C3DMap();
+    C3DMap(const CAuth &auth);
     ~C3DMap();
 
     /// Load mesh sphere and line.
@@ -99,6 +100,9 @@ public:
      */
     void renderCursorMark();
 
+    /// Render a compass on the bottom left corner of the map.
+    void renderCompass();
+
     /// Copy resources to cache if not already existing, and load the mapConfig.
     void setupConfig();
 
@@ -112,6 +116,7 @@ public:
     void mousePress(class QMouseEvent *event);
     void mouseRelease(class QMouseEvent *event);
     void mouseWheel(class QWheelEvent *event);
+    void mouseDoubleClick(class QMouseEvent *event);
 
     std::shared_ptr<Gl> gl;
     std::shared_ptr<vts::renderer::RenderContext> context;
@@ -160,6 +165,10 @@ public slots:
        @param ele The altitude in meters.
      */
     void slotMouseMove(const QPointF& pos, qreal ele);
+
+private:
+    QString bingUrl;
+    QString uuid;
 };
 
 #endif //C3DMAP_H

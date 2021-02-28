@@ -16,6 +16,7 @@
 
 **********************************************************************************************/
 
+#include "CAuth.h"
 #include "CMainWindow.h"
 #include "CSingleInstanceProxy.h"
 #include "setup/IAppSetup.h"
@@ -53,6 +54,8 @@ int main(int argc, char ** argv)
     // make sure this is the one and only instance on the system
     CSingleInstanceProxy s(qlOpts->arguments);
 
+    CAuth dlgAuth; // blocker
+
     QSplashScreen *splash = nullptr;
     if (!qlOpts->nosplash)
     {
@@ -74,7 +77,7 @@ int main(int argc, char ** argv)
         splash->show();
     }
 
-    CMainWindow w;
+    CMainWindow w(dlgAuth);
     w.show();
 
     if(nullptr != splash)

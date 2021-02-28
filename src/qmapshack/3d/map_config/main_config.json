@@ -16,16 +16,15 @@
 	},
 	"boundLayers" : 
 	{
-		"default-satellite": {
+		"world-satellite-bing": {
             "credits": ["imagery"],
             "lodRange": [1, 15],
-            "maskUrl": "{lod}-{x}-{y}.mask",
             "tileRange": [
                 [0, 0],
                 [1, 1]
             ],
             "type": "raster",
-            "url": "https://cdn.melown.com/vts/melown2015/imagery/global/eox-it-sentinel2-cloudless/{lod}-{x}-{y}.jpg?r=2"
+            "url": ""
         }
 	},
 	"browserOptions" : 
@@ -34,14 +33,13 @@
 		"rotate" : 0,
         	"mapMetricUnits": true,
 		"mapFeaturesReduceParams": [0.05, 0.17, 11, 1, 1000],
-		"mapFeaturesReduceMode": "margin",
-        	"mapDefaultFont": "https://cdn.melown.com/libs/vtsjs/fonts/noto-basic/1.0.0/noto.fnt"
+		"mapFeaturesReduceMode": "margin"
 	},
 	"credits" : 
 	{
 		"imagery": {
 		    "id": 2,
-		    "notice": "{copy} EOX IT Services GmbH, {copy} 2005-16 Jonathan de Ferranti"
+		    "notice": "{copy} {Y} Microsoft Corporation, {copy} 2005-16 Jonathan de Ferranti"
 		},
 "geodata": {
             "id": 3,
@@ -283,7 +281,7 @@
 			"melown-viewfinder-world" : 
 			[
 				{
-				    "id": "default-satellite"
+				    "id": "world-satellite-bing"
 				}
 			]
 		}

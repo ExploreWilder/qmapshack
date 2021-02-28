@@ -20,6 +20,7 @@
 #ifndef CMAINWINDOW_H
 #define CMAINWINDOW_H
 
+#include "CAuth.h"
 #include "3d/C3DMap.h"
 #include "ui_IMainWindow.h"
 #include <QDir>
@@ -210,7 +211,7 @@ private slots:
 
 private:
     friend int main(int argc, char ** argv);
-    CMainWindow();
+    CMainWindow(const CAuth &auth);
     void prepareMenuForMac();
     void testForNoView();
     bool docksVisible() const;

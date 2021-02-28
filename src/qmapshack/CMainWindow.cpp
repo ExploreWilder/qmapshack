@@ -17,6 +17,7 @@
 
 **********************************************************************************************/
 
+#include "CAuth.h"
 #include "3d/C3DMap.h"
 #include "canvas/CCanvas.h"
 #include "config.h"
@@ -87,7 +88,7 @@ const QSet<QString> CMainWindow::paths = {mapsPath, demPath, routinoPath, broute
 
 QMutex CMainWindow::mutex(QMutex::NonRecursive);
 
-CMainWindow::CMainWindow()
+CMainWindow::CMainWindow(const CAuth &auth)
     : id(qrand())
 {
     qDebug() << "Application ID:" << id;
@@ -140,7 +141,7 @@ CMainWindow::CMainWindow()
     widgetRtWorkspace = new CRtWorkspace(this);
     dockRealtime->setWidget(widgetRtWorkspace);
 
-    window3DMap = new C3DMap();
+    window3DMap = new C3DMap(auth);
     dock3DMaps->setWidget(QWidget::createWindowContainer(window3DMap));
 
     geoSearchWeb = new CGeoSearchWeb(this);
