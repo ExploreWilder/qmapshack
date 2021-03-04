@@ -28,11 +28,11 @@
 #include "map/CMapPathSetup.h"
 #include "map/IMap.h"
 #include "setup/IAppSetup.h"
+#include "CAuth.h"
 
 #include <QtGui>
 #include <QtWidgets>
-
-
+#include <QtXml>
 
 QList<CMapDraw*> CMapDraw::maps;
 QString CMapDraw::cachePath = "";
@@ -116,7 +116,7 @@ void CMapDraw::saveMapPath(QSettings& cfg)
     cfg.setValue("cachePath", cachePath);
 }
 
-void CMapDraw::loadMapPath(QSettings& cfg)
+void CMapDraw::loadMapPath(QSettings& cfg, const CAuth& auth)
 {
     mapPaths  = cfg.value("mapPath", mapPaths).toStringList();
     cachePath = cfg.value("cachePath", cachePath).toString();
@@ -125,9 +125,51 @@ void CMapDraw::loadMapPath(QSettings& cfg)
     {
         cachePath = IAppSetup::getPlatformInstance()->defaultCachePath();
     }
+
+    QDir dir(mapPaths.first());
+
+    for(const QString &filename : dir.entryList(supportedFormats, QDir::Files | QDir::Readable, QDir::Name))
+    {
+        QFile file(dir.absoluteFilePath(filename));
+        if(!file.open(QIODevice::ReadWrite))
+        {
+            continue;
+        }
+        QDomDocument dom;
+        if(!dom.setContent(&file))
+        {
+            file.close();
+            continue;
+        }
+        QDomElement xmlRawHeader = dom.firstChildElement("TMS").firstChildElement("RawHeader");
+        QDomNodeList xmlValues = xmlRawHeader.elementsByTagName("Value");
+        const qint32 N = xmlValues.count();
+        for(qint32 n = 0; n < N; ++n)
+        {
+            QDomNode xmlValue = xmlValues.item(n);
+            if(xmlValue.attributes().namedItem("name").nodeValue() == "Authorization")
+            {
+                QString authorization("ExploreWilder:" + auth.getUuid());
+                QDomText newNodeText = dom.createTextNode(QString("Basic " + authorization.toUtf8().toBase64()));
+                const QDomNode &child = xmlValue.firstChild();
+                if(child.isNull())
+                {
+                    xmlValue.appendChild(newNodeText);
+                }
+                else
+                {
+                    xmlValue.replaceChild(newNodeText, child);
+                }
+                file.resize(0);
+                QTextStream stream;
+                stream.setDevice(&file);
+                dom.save(stream, 4);
+                break;
+            }
+        }
+        file.close();
+    }
 }
-
-
 
 void CMapDraw::getInfo(const QPoint& px, QString& str)
 {

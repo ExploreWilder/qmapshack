@@ -940,12 +940,19 @@
         <file>../icons/lines/line_yellow.png</file>
         <file>../icons/32x32/Hint.png</file>
         <file>../icons/32x32/Tag.png</file>
-        <file>map/OSM_Topo.tms</file>
-        <file>map/OpenCycleMap.tms</file>
-        <file>map/OpenStreetMap.tms</file>
-        <file>map/WorldSat.wmts</file>
-        <file>map/WorldTopo.wmts</file>
-        <file>map/World.gemf</file>
+        <file>map/sources/Arcgis_World_Imagery.wmts</file>
+        <file>map/sources/Canada_Topo.tms</file>
+        <file>map/sources/France_Imagery.tms</file>
+        <file>map/sources/France_Topo.tms</file>
+        <file>map/sources/New_Zealand_Topo.tms</file>
+        <file>map/sources/Norway_Topo.tms</file>
+        <file>map/sources/OpenStreetMap.tms</file>
+        <file>map/sources/Thunderforest_Cycle.tms</file>
+        <file>map/sources/Thunderforest_Landscape.tms</file>
+        <file>map/sources/Thunderforest_Outdoors.tms</file>
+        <file>map/sources/Thunderforest_Transport.tms</file>
+        <file>map/sources/World_Topo.tms</file>
+        <file>map/sources/World.gemf</file>
         <file>dem/World_Online_SRTM900.wcs</file>
         <file>pics/about.png</file>
         <file>pics/background.jpg</file>

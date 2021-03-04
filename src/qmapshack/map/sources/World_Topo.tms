@@ -1,5 +1,5 @@
 <TMS>
- <Title>OSM D-Land TK 50</Title>
+ <Title>World Topo (OpenTopoMap + Waymarked Trails Hiking)</Title>
  <MinZoomLevel>3</MinZoomLevel>
  <MaxZoomLevel>18</MaxZoomLevel>
  <Layer idx="0">

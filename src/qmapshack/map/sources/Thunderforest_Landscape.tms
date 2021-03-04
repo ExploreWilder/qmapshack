@@ -1,0 +1,13 @@
+<TMS>
+ <Title>Thunderforest Landscape</Title>
+ <MinZoomLevel>1</MinZoomLevel>
+ <MaxZoomLevel>1024</MaxZoomLevel>
+ <Layer idx="0">
+  <ServerUrl>http://127.0.0.1:5000/qmapshack/map/thunderforest/landscape/%1/%2/%3.png</ServerUrl>
+ </Layer>
+  <RawHeader>
+   <Value name="User-Agent">QMapShack</Value>
+   <Value name="Authorization"></Value>
+ </RawHeader>
+ <Copyright>Map data: (c) Thunderforest, under CC-BY-SA 2.0, (c) OpenStreetMap contributors, ODbL</Copyright>
+</TMS>

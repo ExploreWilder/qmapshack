@@ -1,0 +1,13 @@
+<TMS>
+ <Title>New Zealand Topo50 (LDS)</Title>
+ <MinZoomLevel>1</MinZoomLevel>
+ <MaxZoomLevel>1024</MaxZoomLevel>
+ <Layer idx="0">
+  <ServerUrl>http://127.0.0.1:5000/qmapshack/map/nz/topo/%1/%2/%3.png</ServerUrl>
+ </Layer>
+  <RawHeader>
+   <Value name="User-Agent">QMapShack</Value>
+   <Value name="Authorization"></Value>
+ </RawHeader>
+ <Copyright>Map data: (c) LINZ, under CC-BY 4.0</Copyright>
+</TMS>

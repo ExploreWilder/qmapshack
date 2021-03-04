@@ -20,6 +20,7 @@
 #define CMAPDRAW_H
 
 #include "canvas/IDrawContext.h"
+#include "CAuth.h"
 #include <QStringList>
 
 class QPainter;
@@ -86,7 +87,18 @@ public:
     static void setupMapPath(const QString &path);
     static void setupMapPath(const QStringList &paths);
     static void saveMapPath(QSettings &cfg);
-    static void loadMapPath(QSettings &cfg);
+
+    /**
+       @brief Get directories from the config and update credentials.
+
+       The maps in the cache directory with the Authorization Raw Header will be updated according
+       to the session token of the user.
+
+       @param cfg Configuration file.
+       @param auth User credentials with a valid UUID.
+     */
+    static void loadMapPath(QSettings &cfg, const CAuth &auth);
+
     static const QStringList& getSupportedFormats()
     {
         return supportedFormats;

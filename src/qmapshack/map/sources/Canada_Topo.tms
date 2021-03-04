@@ -1,0 +1,13 @@
+<TMS>
+ <Title>Canada Topo (CanVec)</Title>
+ <MinZoomLevel>1</MinZoomLevel>
+ <MaxZoomLevel>1024</MaxZoomLevel>
+ <Layer idx="0">
+  <ServerUrl>http://127.0.0.1:5000/qmapshack/map/ca/topo/%1/%2/%3.png</ServerUrl>
+ </Layer>
+  <RawHeader>
+   <Value name="User-Agent">QMapShack</Value>
+   <Value name="Authorization"></Value>
+ </RawHeader>
+ <Copyright>Map data: (c) Canada, under Open Government Licence</Copyright>
+</TMS>

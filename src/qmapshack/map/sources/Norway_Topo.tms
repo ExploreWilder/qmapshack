@@ -1,0 +1,12 @@
+<TMS>
+ <Title>Norway Topo (Kartverket)</Title>
+ <MinZoomLevel>1</MinZoomLevel>
+ <MaxZoomLevel>1024</MaxZoomLevel>
+ <Layer idx="0">
+  <ServerUrl>https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&amp;zoom=%1&amp;x=%2&amp;y=%3</ServerUrl>
+ </Layer>
+  <RawHeader>
+   <Value name="User-Agent">QMapShack</Value>
+ </RawHeader>
+ <Copyright>Map data: (c) Kartverket</Copyright>
+</TMS>

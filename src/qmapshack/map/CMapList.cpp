@@ -237,7 +237,7 @@ void CMapList::slotContextMenu(const QPoint& point)
 
 static void saveResource(const QString& name, QDir& dir)
 {
-    QFile resource1(QString("://map/%1").arg(name));
+    QFile resource1(QString("://map/sources/%1").arg(name));
     resource1.open(QIODevice::ReadOnly);
 
     QFile file(dir.absoluteFilePath(name));
@@ -262,11 +262,18 @@ void CMapList::slotMapHonk()
 
     QDir dir(mapPath);
 
-    saveResource("WorldSat.wmts", dir);
-    saveResource("WorldTopo.wmts", dir);
+    saveResource("Arcgis_World_Imagery.wmts", dir);
+    saveResource("Canada_Topo.tms", dir);
+    saveResource("France_Imagery.tms", dir);
+    saveResource("France_Topo.tms", dir);
+    saveResource("New_Zealand_Topo.tms", dir);
+    saveResource("Norway_Topo.tms", dir);
     saveResource("OpenStreetMap.tms", dir);
-    saveResource("OSM_Topo.tms", dir);
-    saveResource("OpenCycleMap.tms", dir);
+    saveResource("Thunderforest_Cycle.tms", dir);
+    saveResource("Thunderforest_Landscape.tms", dir);
+    saveResource("Thunderforest_Outdoors.tms", dir);
+    saveResource("Thunderforest_Transport.tms", dir);
+    saveResource("World_Topo.tms", dir);
 
     CMapDraw::setupMapPath(mapPath);
 

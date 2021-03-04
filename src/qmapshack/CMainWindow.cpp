@@ -248,7 +248,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
     }
 
     cfg.beginGroup("Canvas");
-    CMapDraw::loadMapPath(cfg);
+    CMapDraw::loadMapPath(cfg, auth);
     CDemDraw::loadDemPath(cfg);
 
     cfg.beginGroup("Views");
