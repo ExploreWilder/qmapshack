@@ -24,7 +24,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
-#define URL_CHECK_TOKEN "http://127.0.0.1:5000/qmapshack/token/check"
+#define URL_CHECK_TOKEN "https://explorewilder.com/qmapshack/token/check"
 
 class CAuth : public QDialog, private Ui::IAuth
 {

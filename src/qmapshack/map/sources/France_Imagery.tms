@@ -3,7 +3,7 @@
  <MinZoomLevel>1</MinZoomLevel>
  <MaxZoomLevel>1024</MaxZoomLevel>
  <Layer idx="0">
-  <ServerUrl>http://127.0.0.1:5000/qmapshack/map/fr/satellite/%1/%2/%3.jpg</ServerUrl>
+  <ServerUrl>https://explorewilder.com/qmapshack/map/fr/satellite/%1/%2/%3.jpg</ServerUrl>
  </Layer>
   <RawHeader>
    <Value name="User-Agent">QMapShack</Value>

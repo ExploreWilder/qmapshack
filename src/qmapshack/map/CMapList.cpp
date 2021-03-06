@@ -263,7 +263,6 @@ void CMapList::slotMapHonk()
     QDir dir(mapPath);
 
     saveResource("Arcgis_World_Imagery.wmts", dir);
-    saveResource("Canada_Topo.tms", dir);
     saveResource("France_Imagery.tms", dir);
     saveResource("France_Topo.tms", dir);
     saveResource("New_Zealand_Topo.tms", dir);

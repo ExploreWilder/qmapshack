@@ -941,7 +941,6 @@
         <file>../icons/32x32/Hint.png</file>
         <file>../icons/32x32/Tag.png</file>
         <file>map/sources/Arcgis_World_Imagery.wmts</file>
-        <file>map/sources/Canada_Topo.tms</file>
         <file>map/sources/France_Imagery.tms</file>
         <file>map/sources/France_Topo.tms</file>
         <file>map/sources/New_Zealand_Topo.tms</file>
