@@ -112,6 +112,14 @@ C3DMap::C3DMap(const CAuth &auth)
     // application ID that is sent with all resources:
     mapopts.clientId = "qmapshack-explorewilder";
 
+    // path to all downloaded files:
+    QString cachePath = IAppSetup::getPlatformInstance()->defaultCachePath();
+    QString subPath = "3d/vts_cache";
+    QDir mapConfigDir(cachePath);
+    mapConfigDir.mkpath(subPath);
+    cachePath += "/" + subPath;
+    mapopts.cachePath = cachePath.toStdString();
+
     // font to be used: (broken link if defined in the mapConfig file)
     mapopts.geodataFontFallback = "https://cdn.melown.com/libs/vtsjs/fonts/noto-basic/1.0.0/noto.fnt";
 
