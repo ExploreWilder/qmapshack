@@ -166,6 +166,7 @@ private slots:
     void slotAbout();
     void slotWiki();
     void slotQuickstart();
+    void slotCreate3DBoundLayerList();
     void slotAddCanvas();
     void slotCloneCanvas();
     void slotTabCloseRequest(int i);

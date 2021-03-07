@@ -13,7 +13,7 @@
     },
     "boundLayers": {
         "world-satellite-bing": {
-            "credits": ["imagery"],
+            "credits": ["imagery-bing"],
             "lodRange": [1, 21],
             "tileRange": [
                 [0, 0],
@@ -21,6 +21,46 @@
             ],
             "type": "raster",
             "url": ""
+        },
+        "world-satellite-mapbox": {
+            "credits": ["imagery-mapbox"],
+            "lodRange": [1, 21],
+            "tileRange": [
+                [0, 0],
+                [1, 1]
+            ],
+            "type": "raster",
+            "url": "https://api.mapbox.com/v4/mapbox.satellite/{loclod}/{locx}/{locy}@2x.jpg90?access_token="
+        },
+        "world-satellite-eox": {
+            "credits": ["imagery-eox"],
+            "lodRange": [1, 21],
+            "tileRange": [
+                [0, 0],
+                [1, 1]
+            ],
+            "type": "raster",
+            "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2019_3857/default/GoogleMapsCompatible/{loclod}/{locy}/{locx}.jpg"
+        },
+        "world-satellite-arcgis": {
+            "credits": ["imagery-arcgis"],
+            "lodRange": [1, 21],
+            "tileRange": [
+                [0, 0],
+                [1, 1]
+            ],
+            "type": "raster",
+            "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{loclod}/{locy}/{locx}.jpg"
+        },
+        "fr-satellite": {
+            "credits": ["imagery-fr"],
+            "lodRange": [1, 19],
+            "tileRange": [
+                [0, 0],
+                [1, 1]
+            ],
+            "type": "raster",
+            "url": "https://explorewilder.com/qmapshack/map/fr/satellite/{loclod}/{locx}/{locy}.jpg?access_token="
         }
     },
     "browserOptions": {
@@ -31,9 +71,25 @@
         "mapFeaturesReduceMode": "margin"
     },
     "credits": {
-        "imagery": {
+        "imagery-bing": {
             "id": 2,
             "notice": "{copy} {Y} Microsoft Corporation, {copy} 2005-16 Jonathan de Ferranti"
+        },
+        "imagery-mapbox": {
+            "id": 4,
+            "notice": "{copy} {Y} Mapbox, {copy} 2005-16 Jonathan de Ferranti"
+        },
+        "imagery-eox": {
+            "id": 5,
+            "notice": "{copy} {Y} EOX IT Services GmbH, {copy} 2005-16 Jonathan de Ferranti"
+        },
+        "imagery-arcgis": {
+            "id": 6,
+            "notice": "{copy} {Y} ArcGIS, {copy} 2005-16 Jonathan de Ferranti"
+        },
+        "imagery-fr": {
+            "id": 7,
+            "notice": "{copy} {Y} IGN, {copy} 2005-16 Jonathan de Ferranti"
         },
         "geodata": {
             "id": 3,

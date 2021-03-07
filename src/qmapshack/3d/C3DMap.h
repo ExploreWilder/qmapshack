@@ -33,6 +33,7 @@
 namespace vts
 {
     class Map;
+    class MapView;
     class Camera;
     class CameraCredits;
     class Navigation;
@@ -106,6 +107,9 @@ public:
     /// Copy resources to cache if not already existing, and load the mapConfig.
     void setupConfig();
 
+    // Returns a list of available bound layers.
+    QVector<QString> getBoundLayers();
+
     /// Returns the imagery credits (imagery or geodata).
     QString credits(CreditsType creditsType);
 
@@ -166,8 +170,15 @@ public slots:
      */
     void slotMouseMove(const QPointF& pos, qreal ele);
 
+    /**
+       @brief Change the current boundlayer to an other one available in the mapConfig.
+       @param boundLayer Name of the boundlayer as defined in the mapConfig.
+      */
+    void slotSetBoundLayer(const QString& boundLayer);
+
 private:
     QString bingUrl;
+    QString mapboxToken;
     QString uuid;
 };
 

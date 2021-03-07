@@ -142,7 +142,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
     dockRealtime->setWidget(widgetRtWorkspace);
 
     window3DMap = new C3DMap(auth);
-    dock3DMaps->setWidget(QWidget::createWindowContainer(window3DMap));
+    dock3DMap->setWidget(QWidget::createWindowContainer(window3DMap));
 
     geoSearchWeb = new CGeoSearchWeb(this);
 
@@ -294,6 +294,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
     cfg.endGroup(); // Canvas
 
     connect(window3DMap, &C3DMap::sigMapReady, getVisibleCanvas(), &CCanvas::slotEmitSigZoomMap);
+    connect(window3DMap, &C3DMap::sigMapReady, this, &CMainWindow::slotCreate3DBoundLayerList);
 
     QStatusBar * status = statusBar();
     lblPosWGS84 = new QLabel(status);
@@ -310,7 +311,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
 
 
     docks << dockMaps
-          << dock3DMaps
+          << dock3DMap
           << dockDem
           << dockWorkspace
           << dockDatabase
@@ -347,10 +348,10 @@ CMainWindow::CMainWindow(const CAuth &auth)
     actionToggleMaps->setIcon(QIcon(":/icons/32x32/ToggleMaps.png"));
     menuWindow->insertAction(actionSetupToolbar, actionToggleMaps);
 
-    QAction * actionToggle3DMaps = dock3DMaps->toggleViewAction();
-    actionToggle3DMaps->setObjectName("actionToggle3DMaps");
-    actionToggle3DMaps->setIcon(QIcon(":/icons/32x32/Toggle3DMaps.png"));
-    menuWindow->insertAction(actionSetupToolbar, actionToggle3DMaps);
+    QAction * actionToggle3DMap = dock3DMap->toggleViewAction();
+    actionToggle3DMap->setObjectName("actionToggle3DMap");
+    actionToggle3DMap->setIcon(QIcon(":/icons/32x32/Toggle3DMap.png"));
+    menuWindow->insertAction(actionSetupToolbar, actionToggle3DMap);
 
     QAction * actionToggleDem = dockDem->toggleViewAction();
     actionToggleDem->setObjectName("actionToggleDem");
@@ -380,6 +381,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
     menuWindow->insertSeparator(actionSetupToolbar);
 
     QMenu * menu = new QMenu(this);
+    menu->setToolTipsVisible(true);
     menu->addAction(actionShowTrackHighlight);
     menu->addAction(actionShowMinMaxTrackLabels);
     menu->addAction(actionShowMinMaxSummary);
@@ -445,7 +447,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
                      << actionQuickstart
                      << actionSetupToolbar
                      << actionToggleMaps
-                     << actionToggle3DMaps
+                     << actionToggle3DMap
                      << actionToggleDem
                      << actionToggleWorkspace
                      << actionToggleRealtime
@@ -476,7 +478,7 @@ CMainWindow::CMainWindow(const CAuth &auth)
                    << separator1
                    << actionSetupToolbar
                    << actionToggleMaps
-                   << actionToggle3DMaps
+                   << actionToggle3DMap
                    << actionToggleDem
                    << actionToggleWorkspace
                    << actionToggleRealtime
@@ -512,7 +514,7 @@ void CMainWindow::prepareMenuForMac()
 {
     toolBar->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockMaps->toggleViewAction()->setMenuRole(QAction::NoRole);
-    dock3DMaps->toggleViewAction()->setMenuRole(QAction::NoRole);
+    dock3DMap->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockDem->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockWorkspace->toggleViewAction()->setMenuRole(QAction::NoRole);
     dockRealtime->toggleViewAction()->setMenuRole(QAction::NoRole);
@@ -1010,6 +1012,42 @@ void CMainWindow::slotQuickstart()
     }
 }
 
+void CMainWindow::slotCreate3DBoundLayerList()
+{
+    QMenu * menu = new QMenu(this);
+    const QVector<QString> availableBoundLayers = window3DMap->getBoundLayers();
+    QAction * action;
+    for(const QString &bl : availableBoundLayers)
+    {
+        if(bl == "world-satellite-bing")
+        {
+            action = actionSelectBingMapsBoundLayer;
+        }
+        else if(bl == "world-satellite-mapbox")
+        {
+            action = actionSelectMapboxBoundLayer;
+        }
+        else if(bl == "world-satellite-eox")
+        {
+            action = actionSelectEOXBoundLayer;
+        }
+        else if(bl == "world-satellite-arcgis")
+        {
+            action = actionSelectArcGISBoundLayer;
+        }
+        else if(bl == "fr-satellite")
+        {
+            action = actionSelectIGNBoundLayer;
+        }
+        else
+        {
+            continue;
+        }
+        menu->addAction(action);
+        connect(action, &QAction::triggered, this, [this, bl] {this->window3DMap->slotSetBoundLayer(bl);});
+    }
+    actionChange3DMapLayer->setMenu(menu);
+}
 
 void CMainWindow::slotAddCanvas()
 {

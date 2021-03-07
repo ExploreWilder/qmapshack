@@ -55,7 +55,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -83,6 +83,7 @@
     <addaction name="actionAddMapView"/>
     <addaction name="actionCloneMapView"/>
     <addaction name="actionRenameView"/>
+    <addaction name="actionChange3DMapLayer"/>
     <addaction name="separator"/>
     <addaction name="actionShowScale"/>
     <addaction name="actionShowGrid"/>
@@ -282,12 +283,12 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_5"/>
   </widget>
-  <widget class="QDockWidget" name="dock3DMaps">
+  <widget class="QDockWidget" name="dock3DMap">
    <property name="features">
     <set>QDockWidget::DockWidgetFeatureMask</set>
    </property>
    <property name="windowTitle">
-    <string>3D Maps</string>
+    <string>3D Map</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -1022,6 +1023,78 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionChange3DMapLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/Change3DLayer.png</normaloff>:/icons/32x32/Change3DLayer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Change 3D Map Layer</string>
+   </property>
+   <property name="toolTip">
+    <string>Select the boundlayer of the 3D map</string>
+   </property>
+  </action>
+  <action name="actionSelectBingMapsBoundLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/BingMapsLogo.png</normaloff>:/icons/32x32/BingMapsLogo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Microsoft Bing Maps</string>
+   </property>
+   <property name="toolTip">
+    <string>© Microsoft Corporation</string>
+   </property>
+  </action>
+  <action name="actionSelectMapboxBoundLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/MapboxLogo.png</normaloff>:/icons/32x32/MapboxLogo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mapbox</string>
+   </property>
+   <property name="toolTip">
+    <string>© Mapbox</string>
+   </property>
+  </action>
+  <action name="actionSelectArcGISBoundLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/ArcGISLogo.png</normaloff>:/icons/32x32/ArcGISLogo.png</iconset>
+   </property>
+   <property name="text">
+    <string>ArcGIS</string>
+   </property>
+   <property name="toolTip">
+    <string>© Esri, DigitalGlobe, i-cubed, USDA FSA, USGS, GeoEye, Getmapping, AEX, AeroGRID, IGN, IGP, swisstopo, UPR-EGP, and the GIS community</string>
+   </property>
+  </action>
+  <action name="actionSelectIGNBoundLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/IGNLogo.png</normaloff>:/icons/32x32/IGNLogo.png</iconset>
+   </property>
+   <property name="text">
+    <string>IGN France</string>
+   </property>
+   <property name="toolTip">
+    <string>© IGN (Institut national de l’information géographique et forestière)</string>
+   </property>
+  </action>
+  <action name="actionSelectEOXBoundLayer">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/EOXLogo.png</normaloff>:/icons/32x32/EOXLogo.png</iconset>
+   </property>
+   <property name="text">
+    <string>EOX Sentinel2 Cloudless</string>
+   </property>
+   <property name="toolTip">
+    <string>© EOX IT Services GmbH</string>
    </property>
   </action>
  </widget>

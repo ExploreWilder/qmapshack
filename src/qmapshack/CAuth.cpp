@@ -88,6 +88,13 @@ bool CAuth::readReply(const QByteArray &json)
     }
     bingUrl = v.toString();
 
+    v = jsonDoc["mapbox_token"];
+    if (v == QJsonValue::Undefined)
+    {
+        return false;
+    }
+    mapboxToken = v.toString();
+
     return true;
 }
 

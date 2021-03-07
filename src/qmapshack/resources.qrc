@@ -59,6 +59,7 @@
         <file>../icons/32x32/AddWpt.png</file>
         <file>../icons/32x32/Aircraft.png</file>
         <file>../icons/32x32/Apply.png</file>
+        <file>../icons/32x32/ArcGISLogo.png</file>
         <file>../icons/32x32/Area.png</file>
         <file>../icons/32x32/AreaMove.png</file>
         <file>../icons/32x32/AreaOn.png</file>
@@ -66,6 +67,7 @@
         <file>../icons/32x32/ArrowUser.png</file>
         <file>../icons/32x32/Attention.png</file>
         <file>../icons/32x32/AutoSave.png</file>
+        <file>../icons/32x32/BingMapsLogo.png</file>
         <file>../icons/32x32/Bubble.png</file>
         <file>../icons/32x32/CSrcATemp.png</file>
         <file>../icons/32x32/CSrcAccel.png</file>
@@ -85,6 +87,7 @@
         <file>../icons/32x32/CSrcVertSpeed.png</file>
         <file>../icons/32x32/CSrcWTemp.png</file>
         <file>../icons/32x32/Cancel.png</file>
+        <file>../icons/32x32/Change3DLayer.png</file>
         <file>../icons/32x32/Check.png</file>
         <file>../icons/32x32/CloneMapWorkspace.png</file>
         <file>../icons/32x32/Close.png</file>
@@ -116,6 +119,7 @@
         <file>../icons/32x32/EditText.png</file>
         <file>../icons/32x32/EditView.png</file>
         <file>../icons/32x32/Empty.png</file>
+        <file>../icons/32x32/EOXLogo.png</file>
         <file>../icons/32x32/Error.png</file>
         <file>../icons/32x32/Filter.png</file>
         <file>../icons/32x32/FilterLoopsCut.png</file>
@@ -135,6 +139,7 @@
         <file>../icons/32x32/GridWizard.png</file>
         <file>../icons/32x32/Help.png</file>
         <file>../icons/32x32/I.png</file>
+        <file>../icons/32x32/IGNLogo.png</file>
         <file>../icons/32x32/Image.png</file>
         <file>../icons/32x32/Info.png</file>
         <file>../icons/32x32/Label.png</file>
@@ -152,6 +157,7 @@
         <file>../icons/32x32/Lock.png</file>
         <file>../icons/32x32/LogProject.png</file>
         <file>../icons/32x32/Map.png</file>
+        <file>../icons/32x32/MapboxLogo.png</file>
         <file>../icons/32x32/MimeDemVRT.png</file>
         <file>../icons/32x32/MimeDemWCS.png</file>
         <file>../icons/32x32/MimeGEMF.png</file>
@@ -282,7 +288,7 @@
         <file>../icons/32x32/ToggleDem.png</file>
         <file>../icons/32x32/ToggleDocks.png</file>
         <file>../icons/32x32/ToggleGis.png</file>
-        <file>../icons/32x32/Toggle3DMaps.png</file>
+        <file>../icons/32x32/Toggle3DMap.png</file>
         <file>../icons/32x32/ToggleMaps.png</file>
         <file>../icons/32x32/ToggleRealTime.png</file>
         <file>../icons/32x32/ToggleRouter.png</file>
@@ -338,6 +344,7 @@
         <file>../icons/48x48/AddWpt.png</file>
         <file>../icons/48x48/Aircraft.png</file>
         <file>../icons/48x48/Apply.png</file>
+        <file>../icons/48x48/ArcGISLogo.png</file>
         <file>../icons/48x48/Area.png</file>
         <file>../icons/48x48/AreaMove.png</file>
         <file>../icons/48x48/AreaOn.png</file>
@@ -345,6 +352,7 @@
         <file>../icons/48x48/ArrowUser.png</file>
         <file>../icons/48x48/Attention.png</file>
         <file>../icons/48x48/AutoSave.png</file>
+        <file>../icons/48x48/BingMapsLogo.png</file>
         <file>../icons/48x48/Bubble.png</file>
         <file>../icons/48x48/CSrcATemp.png</file>
         <file>../icons/48x48/CSrcAccel.png</file>
@@ -364,6 +372,7 @@
         <file>../icons/48x48/CSrcVertSpeed.png</file>
         <file>../icons/48x48/CSrcWTemp.png</file>
         <file>../icons/48x48/Cancel.png</file>
+        <file>../icons/48x48/Change3DLayer.png</file>
         <file>../icons/48x48/Check.png</file>
         <file>../icons/48x48/CloneMapWorkspace.png</file>
         <file>../icons/48x48/Close.png</file>
@@ -396,6 +405,7 @@
         <file>../icons/48x48/EditView.png</file>
         <file>../icons/48x48/Empty.png</file>
         <file>../icons/48x48/EnergyCycling.png</file>
+        <file>../icons/48x48/EOXLogo.png</file>
         <file>../icons/48x48/Error.png</file>
         <file>../icons/48x48/Filter.png</file>
         <file>../icons/48x48/FilterChangeStartPoint.png</file>
@@ -416,6 +426,7 @@
         <file>../icons/48x48/GridWizard.png</file>
         <file>../icons/48x48/Help.png</file>
         <file>../icons/48x48/I.png</file>
+        <file>../icons/48x48/IGNLogo.png</file>
         <file>../icons/48x48/Image.png</file>
         <file>../icons/48x48/Info.png</file>
         <file>../icons/48x48/Label.png</file>
@@ -433,6 +444,7 @@
         <file>../icons/48x48/Lock.png</file>
         <file>../icons/48x48/LogProject.png</file>
         <file>../icons/48x48/Map.png</file>
+        <file>../icons/48x48/MapboxLogo.png</file>
         <file>../icons/48x48/MimeDemVRT.png</file>
         <file>../icons/48x48/MimeDemWCS.png</file>
         <file>../icons/48x48/MimeGEMF.png</file>
@@ -563,7 +575,7 @@
         <file>../icons/48x48/ToggleDem.png</file>
         <file>../icons/48x48/ToggleDocks.png</file>
         <file>../icons/48x48/ToggleGis.png</file>
-        <file>../icons/48x48/Toggle3DMaps.png</file>
+        <file>../icons/48x48/Toggle3DMap.png</file>
         <file>../icons/48x48/ToggleMaps.png</file>
         <file>../icons/48x48/ToggleRealTime.png</file>
         <file>../icons/48x48/ToggleRouter.png</file>

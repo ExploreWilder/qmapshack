@@ -53,6 +53,11 @@ public:
         return bingUrl;
     }
 
+    const QString& getMapboxToken() const
+    {
+        return mapboxToken;
+    }
+
 protected:
     /// Interpret the received JSON data.
     bool readReply(const QByteArray &json);
@@ -99,6 +104,9 @@ private:
 
     // URL in the VTS format for the mapConfig.
     QString bingUrl;
+
+    // Mapbox access token.
+    QString mapboxToken;
 };
 
 #endif //CAUTH_H

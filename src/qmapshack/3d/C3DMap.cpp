@@ -27,6 +27,7 @@
 #include <vts-browser/log.hpp>
 #include <vts-browser/math.hpp>
 #include <vts-browser/map.hpp>
+#include <vts-browser/mapView.hpp>
 #include <vts-browser/mapOptions.hpp>
 #include <vts-browser/camera.hpp>
 #include <vts-browser/cameraCredits.hpp>
@@ -81,6 +82,7 @@ C3DMap::C3DMap(const CAuth &auth)
 
     bingUrl = auth.getBingUrl();
     uuid = auth.getUuid();
+    mapboxToken = auth.getMapboxToken();
 
     QSurfaceFormat format;
     format.setVersion(3, 3);
@@ -207,6 +209,40 @@ void C3DMap::loadResources()
     }
 }
 
+QVector<QString> C3DMap::getBoundLayers()
+{
+    QVector<QString> boundLayers;
+    std::vector<std::string> bls = map->getResourceBoundLayers();
+    for (const auto &bl : bls)
+    {
+        boundLayers.push_back(QString::fromStdString(bl));
+    }
+    return boundLayers;
+}
+
+void C3DMap::slotSetBoundLayer(const QString& boundLayer)
+{
+    if (!map->getMapconfigReady())
+    {
+        return;
+    }
+
+    vts::MapView view = map->getView(map->selectedView());
+
+    // get the only one surface in the mapConfig
+    const std::string surface = map->getResourceSurfaces().front();
+    vts::MapView::SurfaceInfo &s = view.surfaces[surface];
+
+    // choose the selected boundlayer
+    vts::MapView::BoundLayerInfo bli;
+    bli.id = boundLayer.toStdString();
+    s.boundLayers.push_back(bli);
+
+    // refresh
+    map->setView("", view);
+    map->selectView("");
+}
+
 QString C3DMap::credits(CreditsType creditsType)
 {
     QString credits;
@@ -264,12 +300,22 @@ void C3DMap::setupConfig()
         throw std::runtime_error("Failed to load mapConfig");
     }
 
-    // update the dynamic Bing URL
+    // update the dynamic URLs
     QJsonObject root = mapConfigJsonDoc.object();
     QJsonObject res1 = root["boundLayers"].toObject();
+
     QJsonObject res2 = res1["world-satellite-bing"].toObject();
     res2["url"] = bingUrl;
     res1["world-satellite-bing"] = res2;
+
+    res2 = res1["fr-satellite"].toObject();
+    res2["url"] = res2["url"].toString() + uuid;
+    res1["fr-satellite"] = res2;
+
+    res2 = res1["world-satellite-mapbox"].toObject();
+    res2["url"] = res2["url"].toString() + mapboxToken;
+    res1["world-satellite-mapbox"] = res2;
+
     root["boundLayers"] = res1;
     mapConfigJsonDoc.setObject(root);
 
