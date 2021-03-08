@@ -1149,6 +1149,14 @@ void CMainWindow::slotCurrentTabCanvas(int i)
         if(isMapView)
         {
             tabMaps->setCurrentIndex(n);
+            CCanvas * canvas = dynamic_cast<CCanvas*>(tabWidget->widget(n));
+            if(canvas)
+            {
+                if(!canvas->isHelpVisible())
+                {
+                    canvas->slotEmitSigZoomMap();
+                }
+            }
             break;
         }
     }

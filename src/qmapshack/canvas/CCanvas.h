@@ -136,6 +136,7 @@ public:
     void showProfile(bool yes);
 
     void buildHelpText();
+    bool isHelpVisible() const;
 
     /**
        @brief Add a message by key to be reported on the canvas
@@ -210,6 +211,7 @@ public slots:
     void slotTriggerCompleteUpdate(CCanvas::redraw_e flags);
     void slotUpdateTrackInfo(bool updateVisuals);
     void slotCheckTrackOnFocus();
+    void slotActiveMapsChanged(bool noActiveMap);
 
 public:
     /// Handle the wheel event. It is public so that the 3D map can forward the event.

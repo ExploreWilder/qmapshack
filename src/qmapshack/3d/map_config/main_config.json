@@ -60,7 +60,7 @@
                 [1, 1]
             ],
             "type": "raster",
-            "url": "https://explorewilder.com/qmapshack/map/fr/satellite/{loclod}/{locx}/{locy}.jpg?access_token="
+            "url": "https://explorewilder.com/qmapshack/3d/map/fr/satellite/{loclod}/{locx}/{locy}.jpg?access_token="
         }
     },
     "browserOptions": {

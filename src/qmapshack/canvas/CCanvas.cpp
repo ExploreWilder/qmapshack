@@ -159,6 +159,7 @@ CCanvas::CCanvas(QWidget *parent, const QString &name)
     labelHelp = new QTextBrowser(this);
     labelHelp->setOpenLinks(false);
     connect(map, &CMapDraw::sigActiveMapsChanged, labelHelp, &QLabel::setVisible);
+    connect(map, &CMapDraw::sigActiveMapsChanged, this, &CCanvas::slotActiveMapsChanged);
     connect(labelHelp, &QTextBrowser::anchorClicked, &CMainWindow::self(), static_cast<void (CMainWindow::*)(const QUrl&)>(&CMainWindow::slotLinkActivated));
 
     buildHelpText();
@@ -706,6 +707,14 @@ void CCanvas::wheelEvent(QWheelEvent * e)
     slotEmitSigZoomMap();
 
     update();
+}
+
+void CCanvas::slotActiveMapsChanged(bool noActiveMap)
+{
+    if(!noActiveMap)
+    {
+        slotEmitSigZoomMap();
+    }
 }
 
 void CCanvas::slotEmitSigZoomMap()
@@ -1435,4 +1444,8 @@ bool CCanvas::isShowTrackProfile() const
 bool CCanvas::isShowTrackHighlight() const
 {
     return CMainWindow::self().isShowTrackHighlight() && showTrackOverlays;
+}
+bool CCanvas::isHelpVisible() const
+{
+    return labelHelp != nullptr && labelHelp->isVisible();
 }
