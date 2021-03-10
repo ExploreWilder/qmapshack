@@ -847,6 +847,7 @@ void CMainWindow::zoomCanvasTo(const QRectF rect)
     if(canvas)
     {
         canvas->zoomTo(rect);
+        canvas->slotEmitSigZoomMap();
     }
 }
 

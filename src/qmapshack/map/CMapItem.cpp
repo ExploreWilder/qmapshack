@@ -48,9 +48,18 @@ void CMapItem::setFilename(const QString& name)
     filename = name;
 
     QFile f(filename);
-    f.open(QIODevice::ReadOnly);
+    f.open(QIODevice::ReadOnly | QIODevice::Text);
     QCryptographicHash md5(QCryptographicHash::Md5);
-    md5.addData(f.read(qMin(0x1000LL, f.size())));
+    for(int line = 0; line < 32 && !f.atEnd(); line++)
+    {
+        QByteArray currentLine = f.readLine(0x1000LL);
+
+        // get rid of the dynamic data
+        if(!currentLine.contains("Authorization"))
+        {
+            md5.addData(currentLine);
+        }
+    }
     key = md5.result().toHex();
     f.close();
 }

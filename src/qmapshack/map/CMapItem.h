@@ -34,6 +34,9 @@ public:
     CMapItem(QTreeWidget * parent, CMapDraw *map);
     virtual ~CMapItem();
 
+    /**
+       @brief Generate a key based on the file content.
+     */
     void setFilename(const QString& name);
 
     void saveConfig(QSettings& cfg) const;
@@ -95,7 +98,7 @@ public:
 private:
     CMapDraw * map;
     /**
-       @brief A MD5 hash over the first 1024 bytes of the map file, to identify the map
+       @brief A MD5 hash over the first lines of the map file, to identify the map
      */
     QString key;
     /**
